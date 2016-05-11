@@ -4,6 +4,7 @@
   var gulp = require('gulp');
   var gulpConcat = require('gulp-concat');
   var minjs = require('gulp-uglify');
+  var babel = require('gulp-babel');
   var minifyCSS = require('gulp-minify-css');
   var compass = require('gulp-compass');
   var karma = require('karma').server;
@@ -44,6 +45,13 @@
     }, done);
   });
 
+  gulp.task('testContinuous', ['lint'], function (done) {
+    karma.start({
+      configFile: __dirname + '/karma.conf.js',
+      singleRun: false
+    }, done);
+  });
+
   gulp.task('createTemplates', function(cb){
     gulp.src(packageJson.buildSettings.appFiles.templateFiles)
       .pipe(ngHtml2Js({
@@ -61,9 +69,13 @@
 
     var jsFilesCombined = [].concat(packageJson.buildSettings.appFiles.jsFiles);
 
-    jsFilesCombined.push(packageJson.buildSettings.destination.js+'/'+packageJson.buildSettings.createTemplates.templateFile);
+    jsFilesCombined.push(packageJson.buildSettings.destination.js +
+                         '/'+packageJson.buildSettings.createTemplates.templateFile);
     jsFilesCombined.push(packageJson.buildSettings.combineFiles.ignore);
     gulp.src(jsFilesCombined, {base: packageJson.buildSettings.base})
+      .pipe(babel({
+        presets: ['es2015']
+      }))
       .pipe(gulpConcat(packageJson.buildSettings.destination.jsFile))
       .pipe(gulp.dest(packageJson.buildSettings.destination.js))
       .pipe(rename(packageJson.buildSettings.destination.jsFileMin))
@@ -95,17 +107,7 @@
       .pipe(browserSync.stream());
   });
 
-  gulp.task('nodemon', function (cb) {
-    var called = false;
-    return nodemon({script: packageJson.main}).on('start', function () {
-      if (!called) {
-        called = true;
-        cb();
-      }
-    });
-  });
-
-  gulp.task('serve', ['lint', 'test', 'compileStyle', 'createTemplates', 'combineFiles'], function() {
+  gulp.task('server', ['lint', 'test', 'compileStyle', 'createTemplates', 'combineFiles'], function() {
     environment = 'development';
     browserSync.init({
         server: {
@@ -121,6 +123,6 @@
 
   gulp.task('publish', ['lint', 'test', 'createTemplates', 'combineFiles', 'compileStyle']);
 
-  gulp.task('default', ['serve']);
+  gulp.task('default', ['server']);
 
 })();
