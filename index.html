@@ -6,14 +6,38 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>iui-wizard</title>
     <link href="lib/dist/iui-wizard.css" rel="stylesheet">
+    <style>
+      .site-header {
+        padding: 15px;
+        border-bottom: 1px solid #ccc;
+      }
+      .site-header h1 {
+        margin-bottom: 0;
+      }
+    </style>
   </head>
   <body>
     <main
-      class="container-fluid"
       ng-app="app"
       ng-controller="TestController as test">
+      <header class="site-header">
+        <h1>Influence Health</h1>
+      </header>
+      <iui-wizard
+        name="Build a List: {{'Test List 123'}}"
+        steps="test.steps"
+        buttons="test.buttons"
+        callbacks="test.callbacks">
+        <h2>Wizard Step</h2>
+        <p>boom</p>
+        <form>
+          <ul>
+            <li>boom</li>
+          </ul>
+          <pre>{{test.buttons | json}}</pre>
 
-      <iui-wizard name="test.name"></iui-wizard>
+        </form>
+      </iui-wizard>
 
     </main>
 

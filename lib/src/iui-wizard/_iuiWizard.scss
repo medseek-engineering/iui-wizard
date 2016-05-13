@@ -1,1 +1,241 @@
 // Place directive styles here
+
+
+$wizard-breakpoint: 700px;
+
+.wizard-header {
+  @extend .clearfix;
+
+  background-color: white;
+  border-bottom: 1px solid #ccc;
+  text-align: left;
+  position: relative;
+  padding: 15px;
+  @media (min-width: $wizard-breakpoint) {
+    text-align: left;
+    // padding-left: 15px;
+    // padding-right: 15px;
+  }
+}
+
+.wizard-button-previous {
+  position: absolute;
+  left: 0;
+}
+
+
+// Current Step buttons styles
+.btn-group-wizard-steps {
+  @media (min-width: $wizard-breakpoint) {
+    display: inline-block;
+    float: left;
+    text-align: left;
+  }
+}
+
+%button-reset {
+  background: none;
+  text-align: left;
+  border: none;
+  box-shadow: none;
+}
+
+%button-current-step-over {
+  box-shadow: none;
+  color: $sg_primary;
+}
+
+
+.btn-wizard-current-step {
+  @extend %button-reset;
+  padding: 0;
+  margin: 0;
+  padding-right: 30px;
+  color: $sg_secondary;
+  font-family: $base-font-family;
+  font-size: $large-font-size;
+  @media (max-width: ($wizard-breakpoint - 1px)) {
+    font-size: 16px;
+  }
+  &.btn:hover, &.btn:focus {
+    @extend %button-reset;
+    @extend %button-current-step-over;
+  }
+}
+
+.open .dropdown-toggle.btn-wizard-current-step {
+  @extend %button-current-step-over;
+}
+
+// wizard name
+
+.wizard-name {
+  margin-bottom: 0;
+  @media (max-width: ($wizard-breakpoint - 1px)) {
+    font-size: 16px;
+  }
+}
+
+.wizard-steps-dropdown-menu {
+  border-radius: 0;
+  left: auto;
+  right: 0;
+}
+
+
+// current step dropdown
+
+.wizard-steps {
+  @extend .list-unstyled;
+  padding: 0;
+  margin: 0;
+  > li {
+    
+    &:last-child {
+      
+    }
+  }
+}
+
+.wizard-major-steps {
+  counter-reset: wizard-step-counter;
+  > li {
+    &:not(:last-child) {
+      border-bottom: 1px solid #ccc;
+    }
+    counter-increment: wizard-step-counter;
+    > .wizard-step {
+      position: relative;
+      padding-left: 30px;
+      &:before {
+        position: absolute;
+        left: 0;
+        width: 20px;
+        text-align: right;
+        font-weight: bold;
+        content: counter(wizard-step-counter, decimal);
+      }
+    }
+  }
+}
+
+.wizard-item-active {
+  background-color: #eee;
+}
+
+
+.wizard-step {
+  @extend %button-reset;
+  min-width: 100%;
+  display: block;
+  padding: 5px 15px;
+}
+
+.wizard-sub-step {
+  padding-left: 30px;
+}
+
+
+// wizard buttons 
+
+
+.wizard-mobile-footer {
+  @extend .clearfix;
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  margin: 0;
+  background-color: white;
+  padding: 15px;
+  text-align: center;
+  box-shadow: 0 0 20px rgba(black, 0.3);
+  > .btn {
+    font-size: 16px;
+    &:first-child {
+      float: left;
+    }
+    &:last-child {
+      float: right;
+    }
+  }
+}
+
+.btn-group-wizard-more {
+  float: right;
+  > .btn {
+    font-size: 16px;
+  }
+}
+
+.wizard-buttons {
+  @extend .clearfix;
+  @extend .list-unstyled;
+  
+
+  > li {
+    &:first-child {
+      // next
+      text-align: right;
+    }
+    &:first-child + li + li {
+      // save
+      text-align: center;
+    }
+    float: right;
+    width: calc(100%/3);
+    &:not(:first-child) {
+      padding-right: 10px;
+    }
+  }
+  @media (min-width: $wizard-breakpoint) {
+    position: static;
+    background: none;
+    padding: 0;
+    > li {
+      text-align: left;
+      width: auto;
+    }
+  }
+}
+
+.wizard {
+  background-color: #eee;
+  min-height: 100vh;
+
+}
+
+.wizard-body {
+  // height of buttons with 15px wrapped on footer
+  padding: 15px;
+  padding-bottom: 66px;
+  @media (min-width: $wizard-breakpoint) {
+    padding: 15px;
+  }
+  
+  overflow-y: auto;
+}
+
+.wizard-button-previous {
+  border: none;
+  background-color: transparent;
+  &:before {
+    content: '<';
+  } 
+}
+
+
+.wizard-desktop-hide {
+  @media (min-width: $wizard-breakpoint) {
+    display: none;
+  }
+}
+
+.wizard-mobile-hide {
+  @media (max-width: ($wizard-breakpoint - 1px)) {
+    display: none;
+  }
+}
+
+
+
