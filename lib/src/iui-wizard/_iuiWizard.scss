@@ -1,77 +1,53 @@
 // Place directive styles here
 
+$simple-arrow-width: 4px !default;
 
+$wizard-padding: 15px !default;
 
+$wizard-breakpoint: 700px !default;
 
+$wizard-options-menu-btn-font-size: 2.5rem !default;
+$wizard-options-menu-btn-padding-left-right-size: 15px !default;
+$wizard-options-menu-btn-padding-top-bottom-size: 2rem !default;
 
-$wizard-breakpoint: 700px;
+$wizard-options-menu-btn-height: (2 * $wizard-options-menu-btn-padding-top-bottom-size) + $wizard-options-menu-btn-font-size;
 
-$wizard-prev-btn-font-size: 2.5rem;
-$wizard-prev-btn-padding-left-right-size: 1rem;
-$wizard-prev-btn-padding-top-bottom-size: 1rem;
+$wizard-options-menu-btn-width: calc(#{$wizard-options-menu-btn-padding-left-right-size*2} + 1rem);
 
-$wizard-prev-btn-width: (2 * $wizard-prev-btn-padding-left-right-size) + $wizard-prev-btn-font-size;
-$wizard-prev-btn-height: (2 * $wizard-prev-btn-padding-top-bottom-size) + $wizard-prev-btn-font-size;
+//  Wizard hide/show classes
+.wizard-desktop-hide {
+  @media (min-width: $wizard-breakpoint) {
+    display: none;
+  }
+}
 
-%action-sheet-dropdown {
+.wizard-mobile-hide {
   @media (max-width: ($wizard-breakpoint - 1px)) {
-    &:before {
-      content: '';
-      background-color: rgba(black, 0.25);
-      position: fixed;
-      top: 0;
-      right: 0;
-      bottom: 0;
-      left: 0;
-      visibility: hidden;
-      opacity: 0;
-      transition: opacity 200ms linear;
-    }
-    > .dropdown-menu {
-      visibility: hidden;
-      display: block;
-      transition: transform 200ms ease;
-      transform: translateY(100%);
-      float: none;
-      position: fixed;
-      top: initial;
-      bottom: 0;
-      left: 0;
-      width: 100%;
-      border-radius: 0;
-      box-shadow: 0 0 10px rgba(black, 0.25);
-      border: none;
-      > li {
-        > button, > a {
-          font-size: 16px;
-          display: block;
-          background: none;
-          padding: 1em;
-          min-width: 100%;
-          border: none;
-          color: $sg_secondary;
-        }      
-      }
-    }
-    
-    &.open {
-      &:before {
-        visibility: visible;
-        opacity: 1;
-      }
-      > .dropdown-menu {
-        visibility: visible;
-        transform: translateY(0);
-      }
-    }
+    display: none;
   }
 }
 
 
 
-.action-sheet-dropdown {
-  @extend %action-sheet-dropdown;
+
+
+
+
+.wizard-header {
+  @extend .clearfix;
+  background-color: white;
+  border-bottom: 1px solid $sg_light_grey_border;
+  position: relative;
+  padding: $wizard-padding;
+  padding-right: $wizard-options-menu-btn-width;
+
+  @media (min-width: $wizard-breakpoint) {
+    padding-right: $wizard-padding;
+  }
 }
+
+
+
 
 %button-reset {
   background: none;
@@ -85,32 +61,23 @@ $wizard-prev-btn-height: (2 * $wizard-prev-btn-padding-top-bottom-size) + $wizar
   color: $sg_primary;
 }
 
-
-
-.wizard-header {
-  @extend .clearfix;
-
-  background-color: white;
-  border-bottom: 1px solid $sg_light_grey_border;
-  text-align: center;
-  position: relative;
-  padding: 15px $wizard-prev-btn-width;
-  @media (min-width: $wizard-breakpoint) {
-    text-align: left;
-    padding-left: 15px;
-    padding-right: 15px;
+.btn-simple {
+  @extend %button-reset;
+  padding: 0 $wizard-padding 0 0;
+  margin: 0;
+  color: $sg_secondary;
+  font-family: $base-font-family;
+  font-size: $large-font-size;
+  @media (max-width: ($wizard-breakpoint - 1px)) {
+    font-size: $base-mobile-font-size;
   }
-}
-
-.wizard-mobile-previous-button {
-  position: absolute;
-  left: 0;
-  top: 50%;
-  margin-top: -($wizard-prev-btn-height/2);
-  padding: $wizard-prev-btn-padding-top-bottom-size $wizard-prev-btn-padding-left-right-size;
-  font-size: $wizard-prev-btn-font-size;
-  color: $sg_primary;
-  line-height: 1;
+  &.btn:hover, &.btn:focus {
+    @extend %button-reset;
+    @extend %button-current-step-over;
+  }
+  .open &, .btn-group.open & {
+    @extend %button-current-step-over;
+  }
 }
 
 
@@ -123,37 +90,60 @@ $wizard-prev-btn-height: (2 * $wizard-prev-btn-padding-top-bottom-size) + $wizar
   }
 }
 
-.btn-wizard-current-step {
-  @extend %button-reset;
-  padding: 0 15px 0 0;
-  margin: 0;
-  color: $sg_secondary;
-  font-family: $base-font-family;
-  font-size: $large-font-size;
-  @media (max-width: ($wizard-breakpoint - 1px)) {
-    font-size: 16px;
-  }
-  &.btn:hover, &.btn:focus {
-    @extend %button-reset;
-    @extend %button-current-step-over;
-  }
-  .open & {
-    @extend %button-current-step-over;
+.btn-group-wizard-options-menu {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  margin-top: -($wizard-options-menu-btn-height/2);
+  line-height: 1;
+}
+
+.btn-wizard-options-menu {
+  padding: $wizard-options-menu-btn-padding-top-bottom-size $wizard-padding;
+}
+
+.wizard-options-menu-dropdown {
+  top: 100%;
+  left: 0;
+  right: 0;
+  border: 0;
+  border-radius: 0;
+  margin-top: 0;
+  > li {
+    border-top: 1px solid $sg_light_grey_border;
   }
 }
+
+.btn-menu-item {
+  @extend %button-reset;
+  display: block;
+  padding: $wizard-padding;
+  min-width: 100%;
+  color: $sg_secondary;
+  &:disabled, &[disabled] {
+    opacity: 0.5;
+  }
+  @media (min-width: $wizard-breakpoint) {
+    padding-top: 5px;
+    padding-bottom: 5px;
+  }
+}
+
+
+
 
 // wizard name
 
 .wizard-name {
   margin-bottom: 0;
   @media (max-width: ($wizard-breakpoint - 1px)) {
-    font-size: 12px;
+    font-size: $small-font-size;
     color: $sg_medium_grey;
   }
 }
 
 .wizard-current-step {
-  font-size: 16px;
+  font-size: $base-mobile-font-size;
   margin: 0;
 }
 
@@ -162,7 +152,7 @@ $wizard-prev-btn-height: (2 * $wizard-prev-btn-padding-top-bottom-size) + $wizar
   $border-size: 1px;
   $top-position: -($arrow-size/2);
   $right-position: 12px;
-  $border-color: #ccc;
+  $border-color: $sg_light_grey_border;
   margin-top: 10px;
   border-color: $border-color;
   &:before, &:after {
@@ -193,7 +183,7 @@ $wizard-prev-btn-height: (2 * $wizard-prev-btn-padding-top-bottom-size) + $wizar
   border-radius: 0;
   left: auto;
   right: 0;
-  
+  min-width: 240px;
 
 }
 
@@ -210,20 +200,32 @@ $wizard-prev-btn-height: (2 * $wizard-prev-btn-padding-top-bottom-size) + $wizar
   }
 }
 
+$active-background-color: $sg_secondary_background;
+$wizard-number-spacing: $wizard-padding*2 + 10px;
+
 .wizard-major-steps {
   counter-reset: wizard-step-counter;
   > li {
     // &:not(:last-child) {
     //   border-bottom: 1px solid $sg_light_grey_border;
     // }
+
     counter-increment: wizard-step-counter;
+    &.wizard-item-active:first-child{
+      &:before {
+        @extend .wizard-steps-dropdown-menu:after;
+        background-color: $active-background-color;
+        z-index: 1;
+      }
+    }
     > .wizard-step {
       position: relative;
-      padding-left: 30px;
+      padding-left: $wizard-padding*2 + 10px;
+      font-size: $base-mobile-font-size;
       &:before {
         position: absolute;
         left: 0;
-        width: 20px;
+        width: $wizard-padding*2;
         text-align: right;
         font-weight: bold;
         content: counter(wizard-step-counter, decimal);
@@ -233,22 +235,54 @@ $wizard-prev-btn-height: (2 * $wizard-prev-btn-padding-top-bottom-size) + $wizar
 }
 
 .wizard-item-active {
-  background-color: #eee;
+  background-color: $active-background-color;
 }
 
-
 .wizard-step {
-  @extend %button-reset;
-  min-width: 100%;
-  display: block;
-  padding: 5px 15px;
-  &:disabled, &[disabled] {
-    opacity: 0.5;
+  color: $sg_medium_grey;
+  > .icon-checkmark {
+    color: $sg_gamma_green;
+    display: inline-block;
+    margin-left: 0.25em;
+    margin-bottom: -0.15em;
+    vertical-align: text-top;
+  }
+  .substeps-open > &:after {
+    transform: rotateX(180deg);
   }
 }
 
+.has-substeps {
+  > .wizard-step {
+    padding-right: $wizard-padding*2;
+    position: relative;
+    &:after {
+      position: absolute;
+      top: 50%;
+      right: 10px;
+      margin-top: -($simple-arrow-width/2);
+      content: ' ';
+      width: 0;
+      height: 0;
+      opacity: 1;
+      border-left: $simple-arrow-width solid transparent;
+      border-right: $simple-arrow-width solid transparent;
+      border-top: $simple-arrow-width solid $sg_medium_grey;
+      transition: transform 500ms ease;
+    }
+  }
+}
+
+.wizard-sub-steps {
+  padding-bottom: $wizard-padding;
+}
+
+
 .wizard-sub-step {
-  padding-left: 30px;
+  padding-left: $wizard-number-spacing;
+  .wizard-item-active > & {
+    font-weight: bold;
+  }
 }
 
 
@@ -263,11 +297,12 @@ $wizard-prev-btn-height: (2 * $wizard-prev-btn-padding-top-bottom-size) + $wizar
   left: 0;
   margin: 0;
   background-color: white;
-  padding: 15px;
+  padding: $wizard-padding;
   text-align: center;
   box-shadow: 0 0 10px rgba(black, 0.25);
   > * {
-    font-size: 16px;
+    font-size: $base-mobile-font-size;
+    min-width: 100px;
     &:first-child {
       float: left;
     }
@@ -279,7 +314,7 @@ $wizard-prev-btn-height: (2 * $wizard-prev-btn-padding-top-bottom-size) + $wizar
 
 .btn-group-wizard-more {
   > .btn {
-    font-size: 16px;
+    font-size: $base-mobile-font-size;
     border: none;
     background: none;
     &:hover, &:focus {
@@ -295,14 +330,6 @@ $wizard-prev-btn-height: (2 * $wizard-prev-btn-padding-top-bottom-size) + $wizar
   margin: 0;
 
   > li {
-    &:first-child {
-      // next
-      text-align: right;
-    }
-    &:first-child + li + li {
-      // save
-      text-align: center;
-    }
     float: right;
     width: calc(100%/3);
     &:not(:first-child) {
@@ -321,33 +348,20 @@ $wizard-prev-btn-height: (2 * $wizard-prev-btn-padding-top-bottom-size) + $wizar
 }
 
 .wizard {
-  background-color: #eee;
+  background-color: $sg_secondary_background;
   min-height: 100vh;
 
 }
 
 .wizard-body {
-  // height of buttons with 15px wrapped on footer
-  padding: 15px;
-  padding-bottom: 66px;
-  @media (min-width: $wizard-breakpoint) {
-    padding: 15px;
+  padding: $wizard-padding;
+  @media (max-width: ($wizard-breakpoint - 1px)) {
+    // height of buttons with 15px wrapped on footer
+    padding-bottom: 66px;
   } 
   overflow-y: auto;
 }
 
-
-.wizard-desktop-hide {
-  @media (min-width: $wizard-breakpoint) {
-    display: none;
-  }
-}
-
-.wizard-mobile-hide {
-  @media (max-width: ($wizard-breakpoint - 1px)) {
-    display: none;
-  }
-}
 
 
 .icon {
