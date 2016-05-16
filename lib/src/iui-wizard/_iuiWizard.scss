@@ -1,36 +1,76 @@
 // Place directive styles here
 
 
+
+
+
 $wizard-breakpoint: 700px;
 
-.wizard-header {
-  @extend .clearfix;
+$wizard-prev-btn-font-size: 2.5rem;
+$wizard-prev-btn-padding-left-right-size: 1rem;
+$wizard-prev-btn-padding-top-bottom-size: 1rem;
 
-  background-color: white;
-  border-bottom: 1px solid #ccc;
-  text-align: left;
-  position: relative;
-  padding: 15px;
-  @media (min-width: $wizard-breakpoint) {
-    text-align: left;
-    // padding-left: 15px;
-    // padding-right: 15px;
+$wizard-prev-btn-width: (2 * $wizard-prev-btn-padding-left-right-size) + $wizard-prev-btn-font-size;
+$wizard-prev-btn-height: (2 * $wizard-prev-btn-padding-top-bottom-size) + $wizard-prev-btn-font-size;
+
+%action-sheet-dropdown {
+  @media (max-width: ($wizard-breakpoint - 1px)) {
+    &:before {
+      content: '';
+      background-color: rgba(black, 0.25);
+      position: fixed;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      visibility: hidden;
+      opacity: 0;
+      transition: opacity 200ms linear;
+    }
+    > .dropdown-menu {
+      visibility: hidden;
+      display: block;
+      transition: transform 200ms ease;
+      transform: translateY(100%);
+      float: none;
+      position: fixed;
+      top: initial;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      border-radius: 0;
+      box-shadow: 0 0 10px rgba(black, 0.25);
+      border: none;
+      > li {
+        > button, > a {
+          font-size: 16px;
+          display: block;
+          background: none;
+          padding: 1em;
+          min-width: 100%;
+          border: none;
+          color: $sg_secondary;
+        }      
+      }
+    }
+    
+    &.open {
+      &:before {
+        visibility: visible;
+        opacity: 1;
+      }
+      > .dropdown-menu {
+        visibility: visible;
+        transform: translateY(0);
+      }
+    }
   }
 }
 
-.wizard-button-previous {
-  position: absolute;
-  left: 0;
-}
 
 
-// Current Step buttons styles
-.btn-group-wizard-steps {
-  @media (min-width: $wizard-breakpoint) {
-    display: inline-block;
-    float: left;
-    text-align: left;
-  }
+.action-sheet-dropdown {
+  @extend %action-sheet-dropdown;
 }
 
 %button-reset {
@@ -46,11 +86,47 @@ $wizard-breakpoint: 700px;
 }
 
 
+
+.wizard-header {
+  @extend .clearfix;
+
+  background-color: white;
+  border-bottom: 1px solid $sg_light_grey_border;
+  text-align: center;
+  position: relative;
+  padding: 15px $wizard-prev-btn-width;
+  @media (min-width: $wizard-breakpoint) {
+    text-align: left;
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+}
+
+.wizard-mobile-previous-button {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  margin-top: -($wizard-prev-btn-height/2);
+  padding: $wizard-prev-btn-padding-top-bottom-size $wizard-prev-btn-padding-left-right-size;
+  font-size: $wizard-prev-btn-font-size;
+  color: $sg_primary;
+  line-height: 1;
+}
+
+
+// Current Step buttons styles
+.btn-group-wizard-steps {
+  @media (min-width: $wizard-breakpoint) {
+    display: inline-block;
+    float: left;
+    text-align: left;
+  }
+}
+
 .btn-wizard-current-step {
   @extend %button-reset;
-  padding: 0;
+  padding: 0 15px 0 0;
   margin: 0;
-  padding-right: 30px;
   color: $sg_secondary;
   font-family: $base-font-family;
   font-size: $large-font-size;
@@ -61,10 +137,9 @@ $wizard-breakpoint: 700px;
     @extend %button-reset;
     @extend %button-current-step-over;
   }
-}
-
-.open .dropdown-toggle.btn-wizard-current-step {
-  @extend %button-current-step-over;
+  .open & {
+    @extend %button-current-step-over;
+  }
 }
 
 // wizard name
@@ -72,14 +147,54 @@ $wizard-breakpoint: 700px;
 .wizard-name {
   margin-bottom: 0;
   @media (max-width: ($wizard-breakpoint - 1px)) {
-    font-size: 16px;
+    font-size: 12px;
+    color: $sg_medium_grey;
+  }
+}
+
+.wizard-current-step {
+  font-size: 16px;
+  margin: 0;
+}
+
+%dropdown-arrow {
+  $arrow-size: 10px;
+  $border-size: 1px;
+  $top-position: -($arrow-size/2);
+  $right-position: 12px;
+  $border-color: #ccc;
+  margin-top: 10px;
+  border-color: $border-color;
+  &:before, &:after {
+    z-index: 0;
+    position: absolute;
+    content: '';
+    width: $arrow-size;
+    height: $arrow-size;
+    transform: rotate(45deg);
+    right: $right-position;
+    top: $top-position;
+  }
+  &:before {
+    top: ($top-position - $border-size);
+    background-color: $border-color;
+  }
+  &:after {
+    background-color: white;
+  }
+  > * {
+    z-index: 1;
+    background-color: white;
   }
 }
 
 .wizard-steps-dropdown-menu {
+  @extend %dropdown-arrow;
   border-radius: 0;
   left: auto;
   right: 0;
+  
+
 }
 
 
@@ -88,9 +203,7 @@ $wizard-breakpoint: 700px;
 .wizard-steps {
   @extend .list-unstyled;
   padding: 0;
-  margin: 0;
   > li {
-    
     &:last-child {
       
     }
@@ -100,9 +213,9 @@ $wizard-breakpoint: 700px;
 .wizard-major-steps {
   counter-reset: wizard-step-counter;
   > li {
-    &:not(:last-child) {
-      border-bottom: 1px solid #ccc;
-    }
+    // &:not(:last-child) {
+    //   border-bottom: 1px solid $sg_light_grey_border;
+    // }
     counter-increment: wizard-step-counter;
     > .wizard-step {
       position: relative;
@@ -129,6 +242,9 @@ $wizard-breakpoint: 700px;
   min-width: 100%;
   display: block;
   padding: 5px 15px;
+  &:disabled, &[disabled] {
+    opacity: 0.5;
+  }
 }
 
 .wizard-sub-step {
@@ -149,8 +265,8 @@ $wizard-breakpoint: 700px;
   background-color: white;
   padding: 15px;
   text-align: center;
-  box-shadow: 0 0 20px rgba(black, 0.3);
-  > .btn {
+  box-shadow: 0 0 10px rgba(black, 0.25);
+  > * {
     font-size: 16px;
     &:first-child {
       float: left;
@@ -162,16 +278,21 @@ $wizard-breakpoint: 700px;
 }
 
 .btn-group-wizard-more {
-  float: right;
   > .btn {
     font-size: 16px;
+    border: none;
+    background: none;
+    &:hover, &:focus {
+      background: none;
+      color: $sg_primary;
+    }
   }
 }
 
 .wizard-buttons {
   @extend .clearfix;
   @extend .list-unstyled;
-  
+  margin: 0;
 
   > li {
     &:first-child {
@@ -211,17 +332,8 @@ $wizard-breakpoint: 700px;
   padding-bottom: 66px;
   @media (min-width: $wizard-breakpoint) {
     padding: 15px;
-  }
-  
-  overflow-y: auto;
-}
-
-.wizard-button-previous {
-  border: none;
-  background-color: transparent;
-  &:before {
-    content: '<';
   } 
+  overflow-y: auto;
 }
 
 
@@ -236,6 +348,23 @@ $wizard-breakpoint: 700px;
     display: none;
   }
 }
+
+
+.icon {
+  width: 1em;
+  height: 1em;
+  fill: currentColor;
+  stroke: currentColor;
+}
+
+.btn > .icon {
+  vertical-align: middle;
+  // magic number to vertically center icon with text
+  margin-top: -0.25em;
+}
+
+
+
 
 
 
