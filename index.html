@@ -17,6 +17,10 @@
       .form-wrapper {
         margin-left: 0;
       }
+      .start-wizard-button {
+        margin-top: 10px;
+        margin-left: 10px;
+      }
     </style>
     <!-- Libraries -->
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
@@ -36,9 +40,6 @@
   <body ng-app="app">
     <main
       ng-controller="TestController as test">
-      <header class="site-header">
-        <h1>Influence Health</h1>
-      </header>
       <div ui-view></div>
       <script type="text/ng-template" id="wizard.html">
         <iui-wizard

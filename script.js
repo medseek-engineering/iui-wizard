@@ -18,7 +18,7 @@
     $stateProvider
       .state('home', {
         url: '',
-        template: '<a class="btn btn-default" ui-sref="wizard">Start Wizard</a>'
+        template: '<a class="btn btn-default start-wizard-button" ui-sref="wizard">Start Wizard</a>'
       })
       .state('wizard', {
         url: '',
@@ -308,8 +308,6 @@
       }
       vm.wizardState.current.buttons.next.disabled = newVal;
     }
-
-    //$invalid
   }
 
 })();
