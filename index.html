@@ -23,25 +23,39 @@
       <header class="site-header">
         <h1>Influence Health</h1>
       </header>
-
-      <iui-wizard
-        name="Build a List: {{'Test List 123'}}"
-        steps="test.steps"
-        buttons="test.buttons"
-        callbacks="test.callbacks">
-        <div ui-view="primaryView"></div>
-        
-      </iui-wizard>
+      <div ui-view></div>
+      <script type="text/ng-template" id="/wizard.html">
+        <iui-wizard
+          name="Build a List: {{'Test List 123'}}"
+          wizard-state="test.wizardState"
+          callbacks="test.callbacks">
+          <div ui-view></div>
+        </iui-wizard>
+      </script>
 
       <script type="text/ng-template" id="/step1.html">
-        <h2>Wizard Step 1</h2>
-        <p>boom</p>
-        <form>
-          <ul>
-            <li>boom</li>
-          </ul>
-
-        </form>
+        <h2>Wizard Step 111</h2>
+      </script>
+      <script type="text/ng-template" id="/step2.html">
+        <h2>Wizard Step 2</h2>
+      </script>
+      <script type="text/ng-template" id="/step3-a.html">
+        <h2>Wizard Step 3a</h2>
+      </script>
+      <script type="text/ng-template" id="/step3-b.html">
+        <h2>Wizard Step 3b</h2>
+      </script>
+      <script type="text/ng-template" id="/step4.html">
+        <h2>Wizard Step 4</h2>
+      </script>
+      <script type="text/ng-template" id="/step5.html">
+        <h2>Wizard Step 5</h2>
+      </script>
+      <script type="text/ng-template" id="/step6.html">
+        <h2>Wizard Step 6</h2>
+      </script>
+      <script type="text/ng-template" id="/step7.html">
+        <h2>Wizard Step 7</h2>
       </script>
 
     </main>

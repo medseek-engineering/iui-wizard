@@ -2,7 +2,7 @@
   <header class="wizard-header" ng-class="{'open': wizard.dropdown.isOpen}">
     <h1 class="wizard-name" ng-bind="wizard.name"></h1>
     <h2 class="wizard-current-step wizard-desktop-hide">
-      {{wizard.settings.text.step}} {{wizard.currentStep.index }}: {{wizard.currentStep.name}}
+      {{wizard.settings.text.step}} {{wizard.wizardState.currentMajorStep.stepNumber }}: {{wizard.wizardState.currentMajorStep.name}}
     </h2>
     <div
       class="btn-group btn-group-wizard-steps wizard-mobile-hide"
@@ -11,14 +11,14 @@
         dropdown-toggle
         type="button" 
         class="btn btn-simple btn-wizard-current-step dropdown-toggle">
-        {{wizard.settings.text.step}} {{wizard.currentStep.index }}<span class="wizard-mobile-hide"> {{wizard.settings.text.of}} {{wizard.steps.length}}</span>: {{wizard.currentStep.name}}
+        {{wizard.settings.text.step}} {{wizard.wizardState.currentMajorStep.stepNumber }}<span class="wizard-mobile-hide"> {{wizard.settings.text.of}} {{wizard.steps.length}}</span>: {{wizard.wizardState.currentMajorStep.name}}
         <span class="caret"></span>
       </button>
       <ol 
         class="dropdown-menu wizard-steps-dropdown-menu wizard-steps wizard-major-steps">
         <li
           ng-repeat="step in wizard.steps track by step.id"
-          ng-class="{'wizard-item-active': step.active,  'wizard-item-completed': step.completed, 'wizard-item-disabled': step.disabled, 'has-substeps': step.steps.length && !step.disabled, 'substeps-open': step.isOpen}">
+          ng-class="{'wizard-item-active': wizard.wizardState.currentMajorStep === step,  'wizard-item-completed': step.completed, 'wizard-item-disabled': step.disabled, 'has-substeps': step.steps.length && !step.disabled, 'substeps-open': step.isOpen}">
           <button
             role="button"
             type="button"
@@ -30,13 +30,11 @@
               <use xlink:href="#icon-checkmark" />
             </svg>
           </button>
-          <div
-            collapse="!step.isOpen"
-            ng-if="step.steps.length">
+          <div ng-if="step.steps.length && !!step.isOpen">
             <ol class="wizard-steps wizard-minor-steps wizard-sub-steps">
               <li
                 ng-repeat="subStep in step.steps track by subStep.id"
-                ng-class="{'wizard-item-active': subStep.active, 'wizard-item-completed': subStep.completed, 'wizard-item-disabled': subStep.disabled }">
+                ng-class="{'wizard-item-active': wizard.wizardState.currentStep === subStep, 'wizard-item-completed': subStep.completed, 'wizard-item-disabled': subStep.disabled }">
                 <button
                   role="button"
                   type="button"
@@ -55,32 +53,32 @@
         <wizard-button
           class="btn btn-primary"
           button="wizard.settings.buttons.next"
-          callback="wizard.callbacks.nextClick">
-          {{wizard.settings.buttons.next.title}}
+          callback="wizard.nextClick">
+          {{wizard.settings.buttons.next.name}}
         </wizard-button>
       </li>
       <li ng-if="wizard.settings.buttons.previous.visible">
         <wizard-button
           class="btn btn-default"
           button="wizard.settings.buttons.previous"
-          callback="wizard.callbacks.previousClick">
-          {{wizard.settings.buttons.previous.title}}
+          callback="wizard.previousClick">
+          {{wizard.settings.buttons.previous.name}}
         </wizard-button>
       </li>
       <li ng-if="wizard.settings.buttons.save.visible">
         <wizard-button
           class="btn btn-default"
           button="wizard.settings.buttons.save"
-          callback="wizard.callbacks.saveClick">
-          {{wizard.settings.buttons.save.title}}
+          callback="wizard.saveClick">
+          {{wizard.settings.buttons.save.name}}
         </wizard-button>
       </li>
       <li ng-if="wizard.settings.buttons.cancel.visible">
         <wizard-button
           class="btn btn-default"
           button="wizard.settings.buttons.cancel"
-          callback="wizard.callbacks.cancelClick">
-          {{wizard.settings.buttons.cancel.title}}
+          callback="wizard.cancelClick">
+          {{wizard.settings.buttons.cancel.name}}
         </wizard-button>
       </li>
     </ul>
@@ -107,16 +105,16 @@
         <wizard-button
           class="btn-menu-item"
           button="wizard.settings.buttons.save"
-          callback="wizard.callbacks.saveClick">
-          {{wizard.settings.buttons.save.title}}
+          callback="wizard.saveClick">
+          {{wizard.settings.buttons.save.name}}
         </wizard-button>
       </li>
       <li ng-if="wizard.settings.buttons.cancel.visible">
         <wizard-button
           class="btn-menu-item"
           button="wizard.settings.buttons.cancel"
-          callback="wizard.callbacks.cancelClick">
-          {{wizard.settings.buttons.cancel.title}}
+          callback="wizard.cancelClick">
+          {{wizard.settings.buttons.cancel.name}}
         </wizard-button>
       </li>
     </ul>
@@ -130,14 +128,14 @@
     <wizard-button
       class="btn btn-default"
       button="wizard.settings.buttons.previous"
-      callback="wizard.callbacks.previousClick">
-      {{wizard.settings.buttons.previous.title}}
+      callback="wizard.previousClick">
+      {{wizard.settings.buttons.previous.name}}
     </wizard-button>
     <wizard-button
       class="btn btn-primary"
       button="wizard.settings.buttons.next"
-      callback="wizard.callbacks.nextClick">
-      {{wizard.settings.buttons.next.title}}
+      callback="wizard.nextClick">
+      {{wizard.settings.buttons.next.name}}
     </wizard-button>
   </footer>
   <div ng-include="'/$iui-wizard/icons/symbol-defs.html'"></div>
