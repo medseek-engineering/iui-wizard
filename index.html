@@ -51,7 +51,7 @@
       </script>
 
       <script type="text/ng-template" id="step1.html">
-        <h2>Wizard Step 111</h2>
+        <h2>Wizard Step 1</h2>
         <p>Example showing</p>
         <ul>
           <li>how to setup a screen reader only submit button</li>
@@ -72,6 +72,23 @@
               ng-required="true">
           </div>
           <button class="sr-only" type="submit">Submit</button>
+        </form>
+        <form class="form-wrapper">
+          <div class="form-group">
+            <label for="selectStep">Select Step</label>
+            <select class="form-control" id="selectStep" ng-model="wizardStep.wizardState.current.currentMajorStep" ng-options="item.name for item in wizardStep.wizardState.current.steps track by item.id">
+              <option value="">Select</option>
+            </select>
+          </div>
+          <div class="panel panel-default" ng-repeat="step in wizardStep.wizardState.current.steps track by step.id">
+            <div class="panel-heading">
+              <h2 class="panel-title"><span ng-if="step.parent">Substep: </span>{{step.name}}</h2>
+            </div>
+            <div class="panel-body">
+              <label class="checkbox-inline"><input  type="checkbox" ng-model="step.disabled"> Disabled</label>
+              <label class="checkbox-inline"><input  type="checkbox" ng-model="step.complete"> Complete</label>
+            </div>
+          </div>
         </form>
       </script>
       <script type="text/ng-template" id="step2.html">

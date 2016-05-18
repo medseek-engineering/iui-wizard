@@ -40,8 +40,13 @@
                   type="button"
                   class="btn-menu-item wizard-step wizard-sub-step"
                   ng-disabled="subStep.disabled"
-                  ng-click="wizard.stepClick($event, subStep)"
-                  ng-bind="subStep.name"></button>
+                  ng-click="wizard.stepClick($event, subStep)">
+                  {{subStep.name}}
+                  <svg ng-if="subStep.complete" class="icon icon-checkmark">
+                    <use xlink:href="#icon-checkmark" />
+                  </svg>
+                    
+                </button>
               </li>
             </ol>
           </div>
