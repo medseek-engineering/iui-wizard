@@ -14,58 +14,18 @@
       .site-header h1 {
         margin-bottom: 0;
       }
+      .form-wrapper {
+        margin-left: 0;
+      }
+      .start-wizard-button {
+        margin-top: 10px;
+        margin-left: 10px;
+      }
     </style>
-  </head>
-  <body>
-    <main
-      ng-app="app"
-      ng-controller="TestController as test">
-      <header class="site-header">
-        <h1>Influence Health</h1>
-      </header>
-      <div ui-view></div>
-      <script type="text/ng-template" id="/wizard.html">
-        <iui-wizard
-          name="Build a List: {{'Test List 123'}}"
-          wizard-state="test.wizardState"
-          callbacks="test.callbacks">
-          <div ui-view></div>
-        </iui-wizard>
-      </script>
-
-      <script type="text/ng-template" id="/step1.html">
-        <h2>Wizard Step 111</h2>
-      </script>
-      <script type="text/ng-template" id="/step2.html">
-        <h2>Wizard Step 2</h2>
-      </script>
-      <script type="text/ng-template" id="/step3-a.html">
-        <h2>Wizard Step 3a</h2>
-      </script>
-      <script type="text/ng-template" id="/step3-b.html">
-        <h2>Wizard Step 3b</h2>
-      </script>
-      <script type="text/ng-template" id="/step4.html">
-        <h2>Wizard Step 4</h2>
-      </script>
-      <script type="text/ng-template" id="/step5.html">
-        <h2>Wizard Step 5</h2>
-      </script>
-      <script type="text/ng-template" id="/step6.html">
-        <h2>Wizard Step 6</h2>
-      </script>
-      <script type="text/ng-template" id="/step7.html">
-        <h2>Wizard Step 7</h2>
-      </script>
-
-    </main>
-
-
-
     <!-- Libraries -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/3.5.0/lodash.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.2/angular.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.2/angular.min.js"></script>
 
     <!-- Angular dependent scripts and modules below -->
     <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.12.0/ui-bootstrap-tpls.min.js"></script>
@@ -76,6 +36,67 @@
 
     <!-- test script -->
     <script src="script.js"></script>
+  </head>
+  <body ng-app="app">
+    <main
+      ng-controller="TestController as test">
+      <div ui-view></div>
+      <script type="text/ng-template" id="wizard.html">
+        <iui-wizard
+          name="Build a List: {{'Test List 123'}}"
+          wizard-state="test.wizardState.current"
+          callbacks="test.callbacks">
+          <div ui-view></div>
+        </iui-wizard>
+      </script>
+
+      <script type="text/ng-template" id="step1.html">
+        <h2>Wizard Step 111</h2>
+        <p>Example showing</p>
+        <ul>
+          <li>how to setup a screen reader only submit button</li>
+          <li>a next button that appears disabled until the form is valid</li>
+        </ul>
+        <form
+          class="form-wrapper"
+          name="wizardStep.form"
+          ng-submit="wizardStep.submit(wizardStep.wizardState.current)">
+          
+          <div class="form-group">
+            <label for="name">Name</label>
+            <input
+              class="form-control"
+              type="text"
+              id="name"
+              ng-model="wizardStep.wizardState.current.form.name"
+              ng-required="true">
+          </div>
+          <button class="sr-only" type="submit">Submit</button>
+        </form>
+      </script>
+      <script type="text/ng-template" id="step2.html">
+        <h2>Wizard Step 2</h2>
+      </script>
+      <script type="text/ng-template" id="step3-a.html">
+        <h2>Wizard Step 3a</h2>
+      </script>
+      <script type="text/ng-template" id="step3-b.html">
+        <h2>Wizard Step 3b</h2>
+      </script>
+      <script type="text/ng-template" id="step4.html">
+        <h2>Wizard Step 4</h2>
+      </script>
+      <script type="text/ng-template" id="step5.html">
+        <h2>Wizard Step 5</h2>
+      </script>
+      <script type="text/ng-template" id="step6.html">
+        <h2>Wizard Step 6</h2>
+      </script>
+      <script type="text/ng-template" id="step7.html">
+        <h2>Wizard Step 7</h2>
+      </script>
+
+    </main>
     
   </body>
 </html>

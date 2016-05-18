@@ -6,74 +6,66 @@
     .config(configure)
     .run(runBlock)
     .constant('_', window._)
+    .factory('wizardState', wizardState)
     .factory('wizardStateManager', wizardStateManager)
-    .controller('TestController', TestController);
+    .controller('TestController', TestController)
+    .controller('WizardStep1Controller', WizardStep1Controller);
 
 
   configure.$inject = ['$stateProvider', '$urlRouterProvider'];
-
   function configure($stateProvider, $urlRouterProvider) {
     
     $stateProvider
       .state('home', {
-        url: '/',
-        template: '<a class="btn btn-default" ui-sref="wizard">Start Wizard</a>'
+        url: '',
+        template: '<a class="btn btn-default start-wizard-button" ui-sref="wizard">Start Wizard</a>'
       })
       .state('wizard', {
-        url: '/wizard',
-        templateUrl: '/wizard.html',
-        controller: 'TestController as test',
+        url: '',
+        templateUrl: 'wizard.html',
         redirectTo: 'wizard.step1'
       })
       .state('wizard.step1', {
-        url: '/step1',
-        templateUrl: '/step1.html',
-        controller: 'TestController as test'
+        url: '',
+        templateUrl: 'step1.html',
+        controller: 'WizardStep1Controller as wizardStep'
       })
       .state('wizard.step2', {
-        url: '/step2',
-        templateUrl: '/step2.html',
-        controller: 'TestController as test'
+        url: '',
+        templateUrl: 'step2.html'
       })
       .state('wizard.step3', {
-        url: '/step3',
+        url: '',
         template: '<div ui-view></div>',
         redirectTo: 'wizard.step3.a'
       })
       .state('wizard.step3.a', {
-        url: '/a',
-        templateUrl: '/step3-a.html',
-        controller: 'TestController as test'
+        url: '',
+        templateUrl: 'step3-a.html'
       })
       .state('wizard.step3.b', {
-        url: '/b',
-        templateUrl: '/step3-b.html',
-        controller: 'TestController as test'
+        url: '',
+        templateUrl: 'step3-b.html'
       })
       .state('wizard.step4', {
-        url: '/step4',
-        templateUrl: '/step4.html',
-        controller: 'TestController as test'
+        url: '',
+        templateUrl: 'step4.html'
       })
       .state('wizard.step5', {
-        url: '/step5',
-        templateUrl: '/step5.html',
-        controller: 'TestController as test'
+        url: '',
+        templateUrl: 'step5.html'
       })
       .state('wizard.step6', {
-        url: '/step6',
-        templateUrl: '/step6.html',
-        controller: 'TestController as test'
+        url: '',
+        templateUrl: 'step6.html'
       })
       .state('wizard.step7', {
-        url: '/step7',
-        templateUrl: '/step7.html',
-        controller: 'TestController as test'
+        url: '',
+        templateUrl: 'step7.html'
       });
   }
 
   runBlock.$inject = ['$rootScope', '$state']
-
   function runBlock($rootScope, $state) {
 
     $rootScope.$on('$stateChangeStart', function(evt, to, params) {
@@ -86,7 +78,6 @@
   }
 
   wizardStateManager.$inject = ['$state'];
-
   function wizardStateManager($state) {
 
     var factory = {
@@ -175,9 +166,8 @@
     }
   }
 
-  TestController.$inject = ['wizardStateManager'];
-
-  function TestController(wizardStateManager) {
+  wizardState.$inject = ['wizardStateManager'];
+  function wizardState(wizardStateManager) {
     var vm = this;
 
     var callbacks = {
@@ -196,6 +186,9 @@
         complete: true,
         disabled: false,
         buttons: {
+          next: {
+            disabled: true
+          },
           previous: {
             disabled: true
           }
@@ -272,18 +265,49 @@
       }
     ];
 
-    vm.wizardState = {
+    var current = {
       steps: steps,
       currentMajorStep: steps[0],
       currentStep: steps[0],
       buttons: steps[0].buttons,
-      callbacks: callbacks
+      callbacks: callbacks,
+      form: {
+        name: ''
+      }
     };
 
+    return {
+      current: current
+    }
+  }
+
+  TestController.$inject = ['wizardStateManager', 'wizardState'];
+  function TestController(wizardStateManager, wizardState) {
+    var vm = this;
+
+    vm.wizardState = wizardState;
+
     vm.callbacks = wizardStateManager;
+  }
+
+  WizardStep1Controller.$inject = ['wizardState', 'wizardStateManager', '$scope'];
+  function WizardStep1Controller (wizardState, wizardStateManager, $scope) {
+
+    var vm = this;
+    vm.form = {};
+    vm.wizardState = wizardState;
+    vm.submit = wizardStateManager.nextClick;
 
 
 
+    $scope.$watch(function() { return vm.form.$invalid; }, validityWatch);
+
+    function validityWatch(newVal) {
+      if (newVal === undefined) {
+        return;
+      }
+      vm.wizardState.current.buttons.next.disabled = newVal;
+    }
   }
 
 })();
