@@ -17,51 +17,51 @@
     
     $stateProvider
       .state('home', {
-        url: '/',
+        url: '',
         template: '<a class="btn btn-default" ui-sref="wizard">Start Wizard</a>'
       })
       .state('wizard', {
-        url: '/wizard',
-        templateUrl: '/wizard.html',
+        url: '',
+        templateUrl: 'wizard.html',
         redirectTo: 'wizard.step1'
       })
       .state('wizard.step1', {
-        url: '/step1',
-        templateUrl: '/step1.html',
+        url: '',
+        templateUrl: 'step1.html',
         controller: 'WizardStep1Controller as wizardStep'
       })
       .state('wizard.step2', {
-        url: '/step2',
-        templateUrl: '/step2.html'
+        url: '',
+        templateUrl: 'step2.html'
       })
       .state('wizard.step3', {
-        url: '/step3',
+        url: '',
         template: '<div ui-view></div>',
         redirectTo: 'wizard.step3.a'
       })
       .state('wizard.step3.a', {
-        url: '/a',
-        templateUrl: '/step3-a.html'
+        url: '',
+        templateUrl: 'step3-a.html'
       })
       .state('wizard.step3.b', {
-        url: '/b',
-        templateUrl: '/step3-b.html'
+        url: '',
+        templateUrl: 'step3-b.html'
       })
       .state('wizard.step4', {
-        url: '/step4',
-        templateUrl: '/step4.html'
+        url: '',
+        templateUrl: 'step4.html'
       })
       .state('wizard.step5', {
-        url: '/step5',
-        templateUrl: '/step5.html'
+        url: '',
+        templateUrl: 'step5.html'
       })
       .state('wizard.step6', {
-        url: '/step6',
-        templateUrl: '/step6.html'
+        url: '',
+        templateUrl: 'step6.html'
       })
       .state('wizard.step7', {
-        url: '/step7',
-        templateUrl: '/step7.html'
+        url: '',
+        templateUrl: 'step7.html'
       });
   }
 
