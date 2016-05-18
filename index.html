@@ -21,6 +21,13 @@
         margin-top: 10px;
         margin-left: 10px;
       }
+      label.form-group {
+        display: block;
+      }
+      label.form-group > .form-control {
+        margin-top: 5px;
+        font-weight: normal;
+      }
     </style>
     <!-- Libraries -->
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
@@ -58,7 +65,7 @@
           <li>a next button that appears disabled until the form is valid</li>
         </ul>
         <form
-          class="form-wrapper"
+          class="form-wrapper flush-left"
           name="wizardStep.form"
           ng-submit="wizardStep.submit(wizardStep.wizardState.current)">
           
@@ -73,22 +80,72 @@
           </div>
           <button class="sr-only" type="submit">Submit</button>
         </form>
-        <form class="form-wrapper">
-          <div class="form-group">
-            <label for="selectStep">Select Step</label>
-            <select class="form-control" id="selectStep" ng-model="wizardStep.wizardState.current.currentMajorStep" ng-options="item.name for item in wizardStep.wizardState.current.steps track by item.id">
-              <option value="">Select</option>
-            </select>
-          </div>
-          <div class="panel panel-default" ng-repeat="step in wizardStep.wizardState.current.steps track by step.id">
-            <div class="panel-heading">
-              <h2 class="panel-title"><span ng-if="step.parent">Substep: </span>{{step.name}}</h2>
+        <form class="form-wrapper flush-left with-3-columns">
+          <hr>
+          <h2 class="page-header">Wizard Customization Options</h2>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="selectStep">Major Step<br><small>(changes the dropdown label)</small></label>
+                <select class="form-control" id="selectStep" ng-model="wizardStep.wizardState.current.currentMajorStep" ng-options="item.name for item in wizardStep.wizardState.current.steps | filter: {parent: null} track by item.id">
+                  <option value="">Select</option>
+                </select>
+              </div>
             </div>
-            <div class="panel-body">
-              <label class="checkbox-inline"><input  type="checkbox" ng-model="step.disabled"> Disabled</label>
-              <label class="checkbox-inline"><input  type="checkbox" ng-model="step.complete"> Complete</label>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="selectStep">Current Step<br><small>(changes what the current step is in the dropdown)</small></label>
+                <select class="form-control" id="selectStep" ng-model="wizardStep.wizardState.current.currentStep" ng-options="item.name for item in wizardStep.wizardState.current.steps track by item.id">
+                  <option value="">Select</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-md-12">
+              <hr>
+              <h3>Wizard Buttons</h3>
+            </div>
+            <div class="col-md-6" ng-repeat="(buttonKey, buttonValue) in wizardStep.wizardState.current.buttons track by buttonKey">
+              <div class="panel panel-default">
+                <div class="panel-heading">
+                  <h4 class="panel-title">{{buttonValue.name}}</h4>
+                </div>
+                <div class="panel-body">
+                  <label class="form-group">
+                    Name
+                    <input class="form-control" type="text" ng-model="buttonValue.name">
+                  </label>
+                  <label class="checkbox-inline"><input type="checkbox" ng-model="buttonValue.disabled"> Disabled</label>
+                  <label class="checkbox-inline"><input type="checkbox" ng-model="buttonValue.visible"> Visible</label>
+                </div>
+              </div>
+            </div>
+            
+            <div class="col-md-12">
+              <hr>
+              <h3>Wizard Steps</h3>
+            </div>
+            <div class="col-md-6" ng-repeat="step in wizardStep.wizardState.current.steps track by step.id">
+              <div class="panel panel-default" >
+                <div class="panel-heading">
+                  <h4 class="panel-title"><span ng-if="step.parent">Substep: </span>{{step.name}}</h4>
+                </div>
+                <div class="panel-body">
+                  <label class="form-group">
+                    Name
+                    <input class="form-control" type="text" ng-model="step.name">
+                  </label>
+                  <label class="checkbox-inline"><input  type="checkbox" ng-model="step.disabled"> Disabled</label>
+                  <label class="checkbox-inline"><input  type="checkbox" ng-model="step.complete"> Complete</label>
+                  <label ng-if="step.hasChildren" class="checkbox-inline"><input type="checkbox" ng-model="step.isOpen"> isOpen (show minor steps in dropdown)</label>
+                </div>
+              </div>
+
             </div>
           </div>
+          
+          
+          
+          
         </form>
       </script>
       <script type="text/ng-template" id="step2.html">

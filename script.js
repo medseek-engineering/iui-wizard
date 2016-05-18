@@ -180,6 +180,7 @@
 
     var steps = [
       {
+        parent: null,
         name: 'Define List Details',
         id: 'wizard.step1',
         stepNumber: 1,
@@ -187,16 +188,36 @@
         disabled: false,
         buttons: {
           next: {
-            disabled: true
+            name: 'Next',
+            visible: true,
+            disabled: true,
+            className: ''
           },
           previous: {
-            disabled: true
+            name: 'Previous',
+            visible: true,
+            disabled: true,
+            className: ''
+          },
+          save: {
+            name: 'Save',
+            visible: false,
+            disabled: false,
+            className: ''
+          },
+          cancel: {
+            name: 'Cancel',
+            visible: true,
+            disabled: false,
+            className: ''
           }
         }
       },
       {
+        parent: null,
         name: 'Define Locations',
         id: 'wizard.step2',
+        hasChildren: false,
         stepNumber: 2,
         complete: false,
         disabled: true,
@@ -207,8 +228,10 @@
         }
       },
       {
+        parent: null,
         name: 'Manage Lists',
         id: 'wizard.step3',
+        hasChildren: true,
         stepNumber: 3,
         complete: false,
         disabled: true,
@@ -218,6 +241,7 @@
         parent: 'wizard.step3',
         name: 'Past Lists',
         id: 'wizard.step3.a',
+        hasChildren: false,
         stepNumber: 3,
         complete: true,
         disabled: true
@@ -226,34 +250,43 @@
         parent: 'wizard.step3',
         name: 'Seed Lists',
         id: 'wizard.step3.b',
+        hasChildren: false,
         stepNumber: 3,
         complete: true,
         disabled: true
       },
       {
+        parent: null,
         name: 'Refine Criteria',
         id: 'wizard.step4',
+        hasChildren: false,
         stepNumber: 4,
         complete: false,
         disabled: true
       },
       {
+        parent: null,
         name: 'Manage Segments',
         id: 'wizard.step5',
+        hasChildren: false,
         stepNumber: 5,
         complete: false,
         disabled: true
       },
       {
+        parent: null,
         name: 'Targeting',
         id: 'wizard.step6',
+        hasChildren: false,
         stepNumber: 6,
         complete: false,
         disabled: true
       },
       {
+        parent: null,
         name: 'Summary',
         id: 'wizard.step7',
+        hasChildren: false,
         stepNumber: 7,
         complete: false,
         disabled: true,
