@@ -20,7 +20,9 @@
   "bugs": {
     "url": "https://github.com/medseek-engineering/iui-wizard/issues"
   },
-  "dependencies": {},
+  "dependencies": {
+    "lodash": "~2.4.1"
+  },
   "devDependencies": {
     "angular": "~1.3.2",
     "angular-mocks": "~1.3.2",
@@ -64,7 +66,7 @@
       "iui-general"
     ],
     "createTemplates": {
-      "moduleName": "iui.wizardTemplates",
+      "moduleName": "iui.wizard",
       "prefix": "/$iui-wizard/",
       "templateFile": "templates.js"
     },

@@ -1,0 +1,88 @@
+%dropdown-arrow {
+  $arrow-size: 10px;
+  $border-size: 1px;
+  $top-position: -($arrow-size/2);
+  $right-position: 12px;
+  $border-color: $sg_light_grey_border;
+  margin-top: 10px;
+  border-color: $border-color;
+  &:before, &:after {
+    z-index: 0;
+    position: absolute;
+    content: '';
+    width: $arrow-size;
+    height: $arrow-size;
+    transform: rotate(45deg);
+    right: $right-position;
+    top: $top-position;
+  }
+  &:before {
+    top: ($top-position - $border-size);
+    background-color: $border-color;
+  }
+  &:after {
+    background-color: white;
+  }
+  > * {
+    z-index: 1;
+    background-color: white;
+  }
+}
+
+// Current Step buttons styles
+.btn-group-wizard-steps {
+  @media (min-width: $wizard-breakpoint) {
+    display: inline-block;
+    float: left;
+    text-align: left;
+  }
+}
+
+.wizard-steps-dropdown-menu {
+  @extend %dropdown-arrow;
+  border-radius: 0;
+  left: auto;
+  right: 0;
+  min-width: 240px;
+
+}
+
+
+// current step dropdown
+
+.wizard-steps {
+  @extend .list-unstyled;
+  padding: 0;
+  > li {
+    &:last-child {
+      
+    }
+  }
+}
+
+.wizard-major-steps {
+  counter-reset: wizard-step-counter;
+  > li {
+    counter-increment: wizard-step-counter;
+    &.wizard-item-active:first-child{
+      &:before {
+        @extend .wizard-steps-dropdown-menu:after;
+        background-color: $active-background-color;
+        z-index: 1;
+      }
+    }
+    > .wizard-step {
+      position: relative;
+      padding-left: $wizard-padding*2 + 10px;
+      font-size: $base-mobile-font-size;
+      &:before {
+        position: absolute;
+        left: 0;
+        width: $wizard-padding*2;
+        text-align: right;
+        font-weight: bold;
+        content: counter(wizard-step-counter, decimal);
+      }
+    }
+  }
+}
