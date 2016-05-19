@@ -27,12 +27,6 @@ $wizard-options-menu-btn-width: calc(#{$wizard-options-menu-btn-padding-left-rig
   }
 }
 
-
-
-
-
-
-
 .wizard-header {
   @extend .clearfix;
   background-color: white;
@@ -45,8 +39,6 @@ $wizard-options-menu-btn-width: calc(#{$wizard-options-menu-btn-padding-left-rig
     padding-right: $wizard-padding;
   }
 }
-
-
 
 
 %button-reset {
@@ -100,6 +92,9 @@ $wizard-options-menu-btn-width: calc(#{$wizard-options-menu-btn-padding-left-rig
 
 .btn-wizard-options-menu {
   padding: $wizard-options-menu-btn-padding-top-bottom-size $wizard-padding;
+  &.btn-active > .icon {
+    transform: rotate(180deg);
+  }
 }
 
 .wizard-options-menu-dropdown {
