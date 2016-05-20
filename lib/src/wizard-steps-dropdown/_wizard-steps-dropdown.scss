@@ -43,7 +43,7 @@
   border-radius: 0;
   left: auto;
   right: 0;
-  min-width: 240px;
+  min-width: $wizard-steps-dropdown-min-width;
 
 }
 
@@ -53,11 +53,6 @@
 .wizard-steps {
   @extend .list-unstyled;
   padding: 0;
-  > li {
-    &:last-child {
-      
-    }
-  }
 }
 
 .wizard-major-steps {
@@ -80,7 +75,7 @@
         left: 0;
         width: $wizard-padding*2;
         text-align: right;
-        font-weight: bold;
+        font-weight: $heading-font-weight;
         content: counter(wizard-step-counter, decimal);
       }
     }

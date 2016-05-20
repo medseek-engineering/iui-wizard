@@ -46,6 +46,6 @@
 .wizard-sub-step {
   padding-left: $wizard-number-spacing;
   .wizard-item-active > & {
-    font-weight: bold;
+    font-weight: $heading-font-weight;
   }
 }

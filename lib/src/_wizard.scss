@@ -18,6 +18,8 @@ $wizard-options-menu-btn-width: calc(#{$wizard-options-menu-btn-padding-left-rig
 $active-background-color: $sg_secondary_background;
 $wizard-number-spacing: $wizard-padding*2 + 10px;
 
+$wizard-steps-dropdown-min-width: 240px;
+
 @import "iui-wizard/*.scss";
 @import "wizard-button/*.scss";
 @import "wizard-steps-dropdown/*.scss";
