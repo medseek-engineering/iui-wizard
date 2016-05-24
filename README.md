@@ -1,11 +1,3 @@
-Vars to be replaced:
- - iui-wizard
- - iuiWizard
- - iui.wizardTemplates
- - iui.wizard
- - Wizard
-
-
 # iui-wizard
 
 *Angular version: 1.3.2*

@@ -1,0 +1,20 @@
+<div
+  class="btn-group btn-group-wizard-steps"
+  dropdown>
+  <button
+    dropdown-toggle
+    type="button" 
+    class="btn btn-simple btn-wizard-current-step dropdown-toggle">
+    {{settings.text.step}} {{currentMajorStep.stepNumber }}<span class="wizard-mobile-hide"> {{settings.text.of}} {{steps.length}}</span>: {{currentMajorStep.name}}
+    <span class="caret"></span>
+  </button>
+  <ol 
+    class="dropdown-menu wizard-steps-dropdown-menu wizard-steps wizard-major-steps">
+    <wizard-step
+      ng-repeat="step in steps track by step.id"
+      current-step="currentStep"
+      current-major-step="currentMajorStep"
+      step-click="stepClick"
+      step="step"></wizard-step>
+  </ol>
+</div>
