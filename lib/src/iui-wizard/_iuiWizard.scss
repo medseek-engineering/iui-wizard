@@ -1,18 +1,3 @@
-// Place directive styles here
-
-$simple-arrow-width: 4px !default;
-
-$wizard-padding: 15px !default;
-
-$wizard-breakpoint: 700px !default;
-
-$wizard-options-menu-btn-font-size: 2.5rem !default;
-$wizard-options-menu-btn-padding-left-right-size: 15px !default;
-$wizard-options-menu-btn-padding-top-bottom-size: 2rem !default;
-
-$wizard-options-menu-btn-height: (2 * $wizard-options-menu-btn-padding-top-bottom-size) + $wizard-options-menu-btn-font-size;
-
-$wizard-options-menu-btn-width: calc(#{$wizard-options-menu-btn-padding-left-right-size*2} + 1rem);
 
 //  Wizard hide/show classes
 .wizard-desktop-hide {
@@ -26,12 +11,6 @@ $wizard-options-menu-btn-width: calc(#{$wizard-options-menu-btn-padding-left-rig
     display: none;
   }
 }
-
-
-
-
-
-
 
 .wizard-header {
   @extend .clearfix;
@@ -47,8 +26,6 @@ $wizard-options-menu-btn-width: calc(#{$wizard-options-menu-btn-padding-left-rig
 }
 
 
-
-
 %button-reset {
   background: none;
   text-align: left;
@@ -60,6 +37,8 @@ $wizard-options-menu-btn-width: calc(#{$wizard-options-menu-btn-padding-left-rig
   box-shadow: none;
   color: $sg_primary;
 }
+
+
 
 .btn-simple {
   @extend %button-reset;
@@ -81,14 +60,7 @@ $wizard-options-menu-btn-width: calc(#{$wizard-options-menu-btn-padding-left-rig
 }
 
 
-// Current Step buttons styles
-.btn-group-wizard-steps {
-  @media (min-width: $wizard-breakpoint) {
-    display: inline-block;
-    float: left;
-    text-align: left;
-  }
-}
+
 
 .btn-group-wizard-options-menu {
   position: absolute;
@@ -100,6 +72,9 @@ $wizard-options-menu-btn-width: calc(#{$wizard-options-menu-btn-padding-left-rig
 
 .btn-wizard-options-menu {
   padding: $wizard-options-menu-btn-padding-top-bottom-size $wizard-padding;
+  &.btn-active > .icon {
+    transform: rotate(180deg);
+  }
 }
 
 .wizard-options-menu-dropdown {
@@ -111,21 +86,6 @@ $wizard-options-menu-btn-width: calc(#{$wizard-options-menu-btn-padding-left-rig
   margin-top: 0;
   > li {
     border-top: 1px solid $sg_light_grey_border;
-  }
-}
-
-.btn-menu-item {
-  @extend %button-reset;
-  display: block;
-  padding: $wizard-padding;
-  min-width: 100%;
-  color: $sg_secondary;
-  &:disabled, &[disabled] {
-    opacity: 0.5;
-  }
-  @media (min-width: $wizard-breakpoint) {
-    padding-top: 5px;
-    padding-bottom: 5px;
   }
 }
 
@@ -146,145 +106,6 @@ $wizard-options-menu-btn-width: calc(#{$wizard-options-menu-btn-padding-left-rig
   font-size: $base-mobile-font-size;
   margin: 0;
 }
-
-%dropdown-arrow {
-  $arrow-size: 10px;
-  $border-size: 1px;
-  $top-position: -($arrow-size/2);
-  $right-position: 12px;
-  $border-color: $sg_light_grey_border;
-  margin-top: 10px;
-  border-color: $border-color;
-  &:before, &:after {
-    z-index: 0;
-    position: absolute;
-    content: '';
-    width: $arrow-size;
-    height: $arrow-size;
-    transform: rotate(45deg);
-    right: $right-position;
-    top: $top-position;
-  }
-  &:before {
-    top: ($top-position - $border-size);
-    background-color: $border-color;
-  }
-  &:after {
-    background-color: white;
-  }
-  > * {
-    z-index: 1;
-    background-color: white;
-  }
-}
-
-.wizard-steps-dropdown-menu {
-  @extend %dropdown-arrow;
-  border-radius: 0;
-  left: auto;
-  right: 0;
-  min-width: 240px;
-
-}
-
-
-// current step dropdown
-
-.wizard-steps {
-  @extend .list-unstyled;
-  padding: 0;
-  > li {
-    &:last-child {
-      
-    }
-  }
-}
-
-$active-background-color: $sg_secondary_background;
-$wizard-number-spacing: $wizard-padding*2 + 10px;
-
-.wizard-major-steps {
-  counter-reset: wizard-step-counter;
-  > li {
-    // &:not(:last-child) {
-    //   border-bottom: 1px solid $sg_light_grey_border;
-    // }
-
-    counter-increment: wizard-step-counter;
-    &.wizard-item-active:first-child{
-      &:before {
-        @extend .wizard-steps-dropdown-menu:after;
-        background-color: $active-background-color;
-        z-index: 1;
-      }
-    }
-    > .wizard-step {
-      position: relative;
-      padding-left: $wizard-padding*2 + 10px;
-      font-size: $base-mobile-font-size;
-      &:before {
-        position: absolute;
-        left: 0;
-        width: $wizard-padding*2;
-        text-align: right;
-        font-weight: bold;
-        content: counter(wizard-step-counter, decimal);
-      }
-    }
-  }
-}
-
-.wizard-item-active {
-  background-color: $active-background-color;
-}
-
-.wizard-step {
-  color: $sg_medium_grey;
-  > .icon-checkmark {
-    color: $sg_gamma_green;
-    display: inline-block;
-    margin-left: 0.25em;
-    margin-bottom: -0.15em;
-    vertical-align: text-top;
-  }
-  .substeps-open > &:after {
-    transform: rotateX(180deg);
-  }
-}
-
-.has-substeps {
-  > .wizard-step {
-    padding-right: $wizard-padding*2;
-    position: relative;
-    &:after {
-      position: absolute;
-      top: 50%;
-      right: 10px;
-      margin-top: -($simple-arrow-width/2);
-      content: ' ';
-      width: 0;
-      height: 0;
-      opacity: 1;
-      border-left: $simple-arrow-width solid transparent;
-      border-right: $simple-arrow-width solid transparent;
-      border-top: $simple-arrow-width solid $sg_medium_grey;
-      transition: transform 500ms ease;
-    }
-  }
-}
-
-.wizard-sub-steps {
-  padding-bottom: $wizard-padding;
-}
-
-
-.wizard-sub-step {
-  padding-left: $wizard-number-spacing;
-  .wizard-item-active > & {
-    font-weight: bold;
-  }
-}
-
 
 // wizard buttons 
 

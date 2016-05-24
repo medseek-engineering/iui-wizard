@@ -1,2 +1,27 @@
 // Import Sass Partials
+
+
+$simple-arrow-width: 4px !default;
+
+$wizard-padding: 15px !default;
+
+$wizard-breakpoint: 700px !default;
+
+$wizard-options-menu-btn-font-size: 2.5rem !default;
+$wizard-options-menu-btn-padding-left-right-size: 15px !default;
+$wizard-options-menu-btn-padding-top-bottom-size: 2rem !default;
+
+$wizard-options-menu-btn-height: (2 * $wizard-options-menu-btn-padding-top-bottom-size) + $wizard-options-menu-btn-font-size;
+
+$wizard-options-menu-btn-width: calc(#{$wizard-options-menu-btn-padding-left-right-size*2} + 1rem);
+
+$active-background-color: $sg_secondary_background;
+$wizard-number-spacing: $wizard-padding*2 + 10px;
+
+$wizard-steps-dropdown-min-width: 240px;
+
 @import "iui-wizard/*.scss";
+@import "wizard-button/*.scss";
+@import "wizard-steps-dropdown/*.scss";
+@import "wizard-step/*.scss";
+
