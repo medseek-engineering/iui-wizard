@@ -95,6 +95,7 @@
 // wizard name
 
 .wizard-name {
+  @extend .page-header;
   margin-bottom: 0;
   @media (max-width: ($wizard-breakpoint - 1px)) {
     font-size: $small-font-size;

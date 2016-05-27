@@ -1,15 +1,15 @@
 <section class="wizard">
   <header class="wizard-header" ng-class="{'open': wizard.dropdown.isOpen}">
-    <h1 class="wizard-name" ng-bind="wizard.name"></h1>
+    <h1 class="wizard-name" ng-bind="name"></h1>
     <h2 class="wizard-current-step wizard-desktop-hide">
-      {{wizard.settings.text.step}} {{wizard.wizardState.currentMajorStep.stepNumber }}: {{wizard.wizardState.currentMajorStep.name}}
+      {{wizard.settings.text.step}} {{wizardState.currentMajorStep.stepNumber }}: {{wizardState.currentMajorStep.name}}
     </h2>
     <wizard-steps-dropdown
       class="wizard-mobile-hide"
       settings="wizard.settings"
       steps="wizard.steps"
-      current-major-step="wizard.wizardState.currentMajorStep"
-      current-step="wizard.wizardState.currentStep"
+      current-major-step="wizardState.currentMajorStep"
+      current-step="wizardState.currentStep"
       step-click="wizard.stepClick"></wizard-steps-dropdown>
     <ul class="wizard-buttons wizard-mobile-hide">
       <li ng-if="wizard.settings.buttons.next.visible">
