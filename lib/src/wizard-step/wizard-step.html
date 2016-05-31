@@ -5,7 +5,7 @@
     callback="stepClick"
     button="step">
     {{step.name}}
-    <svg ng-if="step.complete" class="icon icon-checkmark">
+    <svg ng-if="step.complete" class="wizard-icon wizard-icon-checkmark">
       <use xlink:href="#icon-checkmark" />
     </svg>
   </wizard-button>
@@ -19,7 +19,7 @@
           callback="stepClick"
           button="subStep">
           {{subStep.name}}
-          <svg ng-if="subStep.complete" class="icon icon-checkmark">
+          <svg ng-if="subStep.complete" class="wizard-icon wizard-icon-checkmark">
             <use xlink:href="#icon-checkmark" />
           </svg>
       </li>

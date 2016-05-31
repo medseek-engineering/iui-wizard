@@ -1,6 +1,6 @@
 
 .btn-menu-item {
-  @extend %button-reset;
+  @extend %wizard-button-reset;
   display: block;
   padding: $wizard-padding;
   min-width: 100%;
