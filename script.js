@@ -18,55 +18,13 @@
     $stateProvider
       .state('home', {
         url: '',
-        template: '<a class="btn btn-default start-wizard-button" ui-sref="wizard">Start Wizard</a>'
-      })
-      .state('wizard', {
-        url: '',
-        templateUrl: 'wizard.html',
-        redirectTo: 'wizard.step1'
-      })
-      .state('wizard.step1', {
-        url: '',
-        templateUrl: 'step1.html',
-        controller: 'WizardStep1Controller as wizardStep'
-      })
-      .state('wizard.step2', {
-        url: '',
-        templateUrl: 'step2.html'
-      })
-      .state('wizard.step3', {
-        url: '',
-        template: '<div ui-view></div>',
-        redirectTo: 'wizard.step3.a'
-      })
-      .state('wizard.step3.a', {
-        url: '',
-        templateUrl: 'step3-a.html'
-      })
-      .state('wizard.step3.b', {
-        url: '',
-        templateUrl: 'step3-b.html'
-      })
-      .state('wizard.step4', {
-        url: '',
-        templateUrl: 'step4.html'
-      })
-      .state('wizard.step5', {
-        url: '',
-        templateUrl: 'step5.html'
-      })
-      .state('wizard.step6', {
-        url: '',
-        templateUrl: 'step6.html'
-      })
-      .state('wizard.step7', {
-        url: '',
-        templateUrl: 'step7.html'
+        template: '<the-wizard wizard-name="Build a List" wizard-steps="test.wizardState.current.steps"></the-wizard>'
       });
   }
 
   runBlock.$inject = ['$rootScope', '$state']
   function runBlock($rootScope, $state) {
+    $state.go('home');
 
     $rootScope.$on('$stateChangeStart', function(evt, to, params) {
       if (to.redirectTo) {
@@ -166,8 +124,8 @@
     }
   }
 
-  wizardState.$inject = ['wizardStateManager'];
-  function wizardState(wizardStateManager) {
+  wizardState.$inject = ['wizardStateManager', '$timeout'];
+  function wizardState(wizardStateManager, $timeout) {
     var vm = this;
 
     var callbacks = {
@@ -182,43 +140,44 @@
       {
         parent: null,
         name: 'Define List Details',
-        id: 'wizard.step1',
-        stepNumber: 1,
+        id: 'step1',
+        template: '<h2>Define List Details</h2>',
         complete: true,
+        onComplete: function(wizardState){
+          return $timeout(function(){
+            return true;
+          }, 2000);
+        },
         disabled: false,
         buttons: {
           next: {
             name: 'Next',
             visible: true,
-            disabled: true,
-            className: ''
+            disabled: false
           },
           previous: {
             name: 'Previous',
             visible: true,
-            disabled: true,
-            className: ''
+            disabled: true
           },
           save: {
             name: 'Save',
             visible: false,
-            disabled: false,
-            className: ''
+            disabled: false
           },
           cancel: {
             name: 'Cancel',
             visible: true,
-            disabled: false,
-            className: ''
+            disabled: false
           }
         }
       },
       {
         parent: null,
         name: 'Define Locations',
-        id: 'wizard.step2',
+        id: 'step2',
+        template: '<h2>Define Locations</h2>',
         hasChildren: false,
-        stepNumber: 2,
         complete: false,
         disabled: true,
         buttons: {
@@ -230,64 +189,64 @@
       {
         parent: null,
         name: 'Manage Lists',
-        id: 'wizard.step3',
+        template: '<div ui-view></div>',
+        id: 'step3',
         hasChildren: true,
-        stepNumber: 3,
         complete: false,
         disabled: true,
         isOpen: false
       },
       {
-        parent: 'wizard.step3',
+        parent: 'step3',
         name: 'Past Lists',
-        id: 'wizard.step3.a',
+        template: 'past lists',
+        id: 'a',
         hasChildren: false,
-        stepNumber: 3,
         complete: true,
         disabled: true
       },
       {
-        parent: 'wizard.step3',
+        parent: 'step3',
         name: 'Seed Lists',
-        id: 'wizard.step3.b',
+        template: 'seed lists',
+        id: 'b',
         hasChildren: false,
-        stepNumber: 3,
         complete: true,
         disabled: true
       },
       {
         parent: null,
         name: 'Refine Criteria',
-        id: 'wizard.step4',
+        template: 'Refine Criteria',
+        id: 'step4',
         hasChildren: false,
-        stepNumber: 4,
         complete: false,
         disabled: true
       },
       {
         parent: null,
         name: 'Manage Segments',
-        id: 'wizard.step5',
+        template: 'Manage Segments',
+        id: 'step5',
         hasChildren: false,
-        stepNumber: 5,
         complete: false,
         disabled: true
       },
       {
         parent: null,
         name: 'Targeting',
-        id: 'wizard.step6',
+        template: 'Targeting',
+        id: 'step6',
         hasChildren: false,
-        stepNumber: 6,
         complete: false,
         disabled: true
       },
       {
         parent: null,
         name: 'Summary',
-        id: 'wizard.step7',
+        template: 'Summary',
+        id: 'step7',
         hasChildren: false,
-        stepNumber: 7,
         complete: false,
         disabled: true,
         buttons: {
