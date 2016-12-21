@@ -1,13 +1,140 @@
 (function() {
   'use strict';
 
+
+  var signupSteps = [
+    {
+      name: 'Welcome',
+      id: 'terms',
+      buttons: {
+        cancel: {
+          visible: false,
+        },
+        next: {
+          name: 'I Accept',
+          disabled: true
+        },
+        previous: {
+          name: 'Cancel'
+        },
+      },
+      template: `
+        <form class="form-wrapper with-2-columns">
+          <p class="lead">A wizard will guide you through the sign up process step by step. It will take a few minutes to complete. We strive to make the process as easy as possible, but connecting to you (or another person's) patient record takes some time. We pride ourselves on security verification and getting your information correct. Don't worry! Our sign up process will guide you through each step.</p>
+          <div class="checkbox">
+            <label>
+              <input ng-change="wizard.state.buttons.next.disabled = !wizardData.overEighteen" ng-model="wizardData.overEighteen" type="checkbox"> I am over the age of 18.
+            </label>
+          </div>
+          <h2 class="page-subheader">Terms &amp; Conditions</h2>
+          <p>abc Health operates this website (“Site”) for your convenience to provide information about the services and resources abc Health offers, and to help you be a partner in your healthcare. By accessing and using this Site, you agree to all of the terms and conditions stated here, as well as any additional terms and conditions that might be applicable to a specific area of this Site</p>
+          
+        </form>
+      `
+    },
+    {
+      name: 'User Information',
+      id: 'user-information',
+      template: `
+        <form class="form-wrapper form-horizontal">
+          <p class="lead">Please enter information for this account</p>
+          <div class="form-group">
+            <label for="signup_email" class="control-label col-md-6 required-field text-left">Email</label>
+            <div class="col-md-6">
+              <input class="form-control" type="email" ng-model="wizardData.email" id="signup_email" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="signup_confirmEmail" class="control-label col-md-6 required-field text-left">Confirm Email</label>
+            <div class="col-md-6">
+              <input class="form-control" type="email" ng-model="wizardData.confirmEmail" id="signup_confirmEmail" />
+            </div>
+          </div>
+          <hr>
+          <div class="form-group">
+            <label for="signup_username" class="control-label col-md-6 required-field text-left">Username</label>
+            <div class="col-md-6">
+              <input class="form-control" type="text" ng-model="wizardData.username" id="signup_username" />
+            </div>
+          </div>
+          <hr>
+          <div class="form-group">
+            <label for="signup_password" class="control-label col-md-6 required-field text-left">Password</label>
+            <div class="col-md-6">
+              <input class="form-control" type="password" ng-model="wizardData.password" id="signup_password" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="signup_confirmPassword" class="control-label col-md-6 required-field text-left">Confirm Password</label>
+            <div class="col-md-6">
+              <input class="form-control" type="password" ng-model="wizardData.confirmPassword" id="signup_confirmPassword" />
+            </div>
+          </div>
+        </form>
+      `
+    },
+    {
+      name: 'Connect Patient',
+      id: 'connect-patient',
+      buttons: {
+        next: {
+          name: 'Complete',
+          disabled: false
+        }
+      },
+      template: `
+        <form>
+          <p class="lead">Please enter the information of the patient you are connecting to</p>
+          <div ng-if="!wizardData.hasPin">
+            <div class="form-inline">
+              <div class="form-group">
+                <label for="signup_pin" class="control-label">What is the PIN associated with the patient's record?</label><br>
+                <input id="signup_pin" class="form-control" ng-model="wizardData.pin">
+              </div>
+            </div>
+            <hr>
+          </div>
+          
+          <div class="form-wrapper form-horizontal">
+
+            <div class="form-group">
+              <label for="signup_patient_firstName" class="control-label col-md-6 required-field text-left">First Name</label>
+              <div class="col-md-6">
+                <input class="form-control" type="text" ng-model="wizardData.patientFirstName" id="signup_patient_firstName" />
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="signup_patient_lastName" class="control-label col-md-6 required-field text-left">Last Name</label>
+              <div class="col-md-6">
+                <input class="form-control" type="text" ng-model="wizardData.patientLastName" id="signup_patient_lastName" />
+              </div>
+            </div>
+          
+            <div class="form-group">
+              <label for="signup_patient_dateOfBirth" class="control-label col-md-6 required-field text-left">Date of Birth</label>
+              <div class="col-md-6">
+                <input class="form-control" type="date" ng-model="wizardData.patientDateOfBirth" id="signup_patient_dateOfBirth" />
+              </div>
+            </div>
+
+          </div>
+          
+          
+        </form>
+      `
+    }
+  ];
+
   angular
     .module('app', ['ui.bootstrap', 'iui.wizard', 'ui.router'])
     .config(configure)
     .run(runBlock)
     .constant('_', window._)
-    .factory('wizardState', wizardState)
-    .factory('wizardStateManager', wizardStateManager)
+    .constant('signupSteps', signupSteps)
+    .value('wizardSteps', {
+      signup: []
+    })
     .controller('TestController', TestController)
     .controller('WizardStep1Controller', WizardStep1Controller);
 
@@ -17,14 +144,56 @@
     
     $stateProvider
       .state('home', {
-        url: '',
-        template: '<the-wizard wizard-name="Build a List" wizard-steps="test.wizardState.current.steps"></the-wizard>'
+        url: '/',
+        template: `<div class="container">
+                     <a class="btn btn-default" ui-sref="signup({hasPin: true, pin: 'fooo1', email: 'foo@foo.com', confirmEmail: 'foo@foo.com', username: 'foo@foo.com'})">Signup with Pin</a>
+                     <a class="btn btn-default" ui-sref="signup">Signup without Pin</a>
+                  </div>`
+      })
+      .state('signup', {
+        url: '/signup',
+        params: {
+          hasPin: false,
+          pin: null,
+          email: null,
+          confirmEmail: null,
+          username: null
+        },
+        controller: ['$state','$stateParams', 'wizardSteps', function($state, $stateParams, wizardSteps) {
+          
+
+          var vm = this;
+
+          vm.data = angular.copy($stateParams);
+          vm.steps = wizardSteps.signup;
+
+          vm.callbacks = {
+            cancel: function() {
+              return $state.go('home');
+            },
+            complete: function() {
+              return $state.go('home');
+            }
+          };
+
+        }],
+        controllerAs: 'signupController',
+        template: `
+          <the-wizard
+           wizard-data="signupController.data"
+           wizard-name="Signup"
+           wizard-steps="signupController.steps"
+           wizard-callbacks="signupController.callbacks"></the-wizard>`
       });
   }
 
-  runBlock.$inject = ['$rootScope', '$state']
-  function runBlock($rootScope, $state) {
-    $state.go('home');
+  runBlock.$inject = ['$rootScope', '$state', 'wizardRouterHelper', 'signupSteps', 'wizardSteps']
+  function runBlock($rootScope, $state, wizardRouterHelper, signupSteps, wizardSteps) {
+    //$state.go('home');
+
+    wizardSteps.signup = wizardRouterHelper.mapStepsToStates(signupSteps, 'signup');
+
+    wizardRouterHelper.configureStates(wizardSteps.signup);
 
     $rootScope.$on('$stateChangeStart', function(evt, to, params) {
       if (to.redirectTo) {
@@ -35,251 +204,9 @@
 
   }
 
-  wizardStateManager.$inject = ['$state'];
-  function wizardStateManager($state) {
-
-    var factory = {
-      goToStep: goToStep,
-      nextClick: nextClick,
-      previousClick: previousClick,
-      cancelClick: cancelClick,
-      saveClick: saveClick
-    };
-    return factory;
-
-    function getActive(steps) {
-      return _.findWhere(steps, {active: true});
-    }
-
-    function getNextItem(array, value) {
-      var nextItem;
-      var index = array.indexOf(value);
-      if(index >= 0 && index < array.length - 1) {
-        nextItem = array[index + 1];
-      }
-      return nextItem;
-    }
-
-    function getPreviousItem(array, value) {
-      var previousItem;
-      var index = array.indexOf(value);
-      if(index > 0) {
-        previousItem = array[index - 1];
-      } else {
-        previousItem = array[index];
-      }
-      return previousItem;
-    }
-
-    function nextClick(wizardState) {
-      var nextItem = getNextItem(wizardState.steps.filter(filterParents), wizardState.currentStep);
-
-      function filterParents(step) {
-        return !_.where(wizardState.steps, {parent: step.id }).length;
-      }
-
-      if (!nextItem) {
-        return $state.go('home');
-      }
-
-      return goToStep(wizardState, nextItem);
-    }
-
-    function previousClick(wizardState) {
-      var previousItem = getPreviousItem(wizardState.steps.filter(filterParents), wizardState.currentStep);
-
-      function filterParents(step) {
-        return !_.where(wizardState.steps, {parent: step.id }).length;
-      }
-
-      return goToStep(wizardState, previousItem);
-    }
-
-    function saveClick() {
-      return $state.go('home');
-    }
-
-    function cancelClick(wizardState) {
-      return $state.go('home');
-    }
-
-    function goToStep(wizardState, step) {
-      // reset
-      wizardState.currentMajorStep.isOpen = false;
-      wizardState.buttons = step.buttons || {};
-      
-      var parent;
-
-      if (step.parent) {
-        parent = _.findWhere(wizardState.steps, {id: step.parent});
-        parent.disabled = false;
-        parent.isOpen = true;
-      }
-
-      step.disabled = false;
-      wizardState.currentMajorStep = parent || step;
-      wizardState.currentStep = step;
-
-      return $state.go(wizardState.currentStep.id);
-    }
-  }
-
-  wizardState.$inject = ['wizardStateManager', '$timeout'];
-  function wizardState(wizardStateManager, $timeout) {
-    var vm = this;
-
-    var callbacks = {
-      goToStep: wizardStateManager.goToStep,
-      nextClick: wizardStateManager.nextClick,
-      previousClick: wizardStateManager.previousClick,
-      cancelClick: wizardStateManager.cancelClick,
-      saveClick: wizardStateManager.saveClick
-    };
-
-    var steps = [
-      {
-        parent: null,
-        name: 'Define List Details',
-        id: 'step1',
-        template: '<h2>Define List Details</h2>',
-        complete: true,
-        onComplete: function(wizardState){
-          return $timeout(function(){
-            return true;
-          }, 2000);
-        },
-        disabled: false,
-        buttons: {
-          next: {
-            name: 'Next',
-            visible: true,
-            disabled: false
-          },
-          previous: {
-            name: 'Previous',
-            visible: true,
-            disabled: true
-          },
-          save: {
-            name: 'Save',
-            visible: false,
-            disabled: false
-          },
-          cancel: {
-            name: 'Cancel',
-            visible: true,
-            disabled: false
-          }
-        }
-      },
-      {
-        parent: null,
-        name: 'Define Locations',
-        id: 'step2',
-        template: '<h2>Define Locations</h2>',
-        hasChildren: false,
-        complete: false,
-        disabled: true,
-        buttons: {
-          next: {
-            name: 'customized next button'
-          }
-        }
-      },
-      {
-        parent: null,
-        name: 'Manage Lists',
-        template: '<div ui-view></div>',
-        id: 'step3',
-        hasChildren: true,
-        complete: false,
-        disabled: true,
-        isOpen: false
-      },
-      {
-        parent: 'step3',
-        name: 'Past Lists',
-        template: 'past lists',
-        id: 'a',
-        hasChildren: false,
-        complete: true,
-        disabled: true
-      },
-      {
-        parent: 'step3',
-        name: 'Seed Lists',
-        template: 'seed lists',
-        id: 'b',
-        hasChildren: false,
-        complete: true,
-        disabled: true
-      },
-      {
-        parent: null,
-        name: 'Refine Criteria',
-        template: 'Refine Criteria',
-        id: 'step4',
-        hasChildren: false,
-        complete: false,
-        disabled: true
-      },
-      {
-        parent: null,
-        name: 'Manage Segments',
-        template: 'Manage Segments',
-        id: 'step5',
-        hasChildren: false,
-        complete: false,
-        disabled: true
-      },
-      {
-        parent: null,
-        name: 'Targeting',
-        template: 'Targeting',
-        id: 'step6',
-        hasChildren: false,
-        complete: false,
-        disabled: true
-      },
-      {
-        parent: null,
-        name: 'Summary',
-        template: 'Summary',
-        id: 'step7',
-        hasChildren: false,
-        complete: false,
-        disabled: true,
-        buttons: {
-          next: {
-            name: 'Complete'
-          }
-        }
-      }
-    ];
-
-    var current = {
-      steps: steps,
-      currentMajorStep: steps[0],
-      currentStep: steps[0],
-      buttons: steps[0].buttons,
-      callbacks: callbacks,
-      form: {
-        name: ''
-      }
-    };
-
-    return {
-      current: current
-    }
-  }
-
-  TestController.$inject = ['wizardStateManager', 'wizardState'];
-  function TestController(wizardStateManager, wizardState) {
-    var vm = this;
-
-    vm.wizardState = wizardState;
-
-    vm.callbacks = wizardStateManager;
+  TestController.$inject = ['$state', '$timeout', 'wizardSteps'];
+  function TestController($state, $timeout, wizardSteps) {
+    
   }
 
   WizardStep1Controller.$inject = ['wizardState', 'wizardStateManager', '$scope'];

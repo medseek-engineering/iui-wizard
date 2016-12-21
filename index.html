@@ -31,6 +31,54 @@
         margin-top: 5px;
         font-weight: normal;
       }
+      .form-horizontal .control-label.text-left {
+        text-align: left;
+      }
+
+      .wizard-body hr {
+        border-top-color: #d4d4d4;
+      }
+
+      @keyframes rotateFall {
+    0%      { transform: rotateZ(0deg); }
+    20%     { transform: rotateZ(10deg); animation-timing-function: ease-out; }
+    40%     { transform: rotateZ(17deg); }
+    60%     { transform: rotateZ(16deg); }
+    100%    { transform: translateY(100%) rotateZ(17deg); }
+}
+
+/* slide in from the bottom */
+@keyframes slideOutLeft {
+    to      { transform: translateX(-100%); }
+}
+
+/* rotate out newspaper */
+@keyframes rotateOutNewspaper {
+    to      { transform: translateZ(-3000px) rotateZ(360deg); opacity: 0; }
+}
+
+/* entering animations --------------------------------------- */
+/* scale up */
+@keyframes scaleUp {
+    from    { opacity: 0.3; -webkit-transform: scale(0.8); }
+}
+
+/* slide in from the right */
+@keyframes slideInRight {
+    from    { transform:translateX(100%); }
+    to      { transform: translateX(0); }
+}
+
+/* slide in from the bottom */
+@keyframes slideInUp {
+    from    { transform:translateY(100%); }
+    to      { transform: translateY(0); }
+}
+      
+      .ng-enter           { animation: scaleUp 0.5s both ease-in; z-index: 8888; }
+    .ng-leave           { animation: slideOutLeft 0.5s both ease-in; z-index: 9999; }
+
+
     </style>
     <!-- Libraries -->
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
@@ -51,128 +99,6 @@
     <main
       ng-controller="TestController as test">
       <div ui-view></div>
-      <script type="text/ng-template" id="wizard.html">
-        <iui-wizard
-          name="Build a List: {{'Test List 123'}}"
-          wizard-state="test.wizardState.current"
-          callbacks="test.callbacks">
-          <div ui-view></div>
-        </iui-wizard>
-      </script>
-
-      <script type="text/ng-template" id="step1.html">
-        <h2>Wizard Step 1</h2>
-        <p>Example showing</p>
-        <ul>
-          <li>how to setup a screen reader only submit button</li>
-          <li>a next button that appears disabled until the form is valid</li>
-        </ul>
-        <form
-          class="form-wrapper flush-left"
-          name="wizardStep.form"
-          ng-submit="wizardStep.submit(wizardStep.wizardState.current)">
-          
-          <div class="form-group">
-            <label for="name">Name</label>
-            <input
-              class="form-control"
-              type="text"
-              id="name"
-              ng-model="wizardStep.wizardState.current.form.name"
-              ng-required="true">
-          </div>
-          <button class="sr-only" type="submit">Submit</button>
-        </form>
-        <form class="form-wrapper flush-left with-3-columns">
-          <hr>
-          <h2 class="page-header">Wizard Customization Options</h2>
-          <div class="row">
-            <div class="col-md-6">
-              <div class="form-group">
-                <label for="selectStep">Major Step<br><small>(changes the dropdown label)</small></label>
-                <select class="form-control" id="selectStep" ng-model="wizardStep.wizardState.current.currentMajorStep" ng-options="item.name for item in wizardStep.wizardState.current.steps | filter: {parent: null} track by item.id">
-                  <option value="">Select</option>
-                </select>
-              </div>
-            </div>
-            <div class="col-md-6">
-              <div class="form-group">
-                <label for="selectStep">Current Step<br><small>(changes what the current step is in the dropdown)</small></label>
-                <select class="form-control" id="selectStep" ng-model="wizardStep.wizardState.current.currentStep" ng-options="item.name for item in wizardStep.wizardState.current.steps track by item.id">
-                  <option value="">Select</option>
-                </select>
-              </div>
-            </div>
-            <div class="col-md-12">
-              <hr>
-              <h3>Wizard Buttons</h3>
-            </div>
-            <div class="col-md-6" ng-repeat="(buttonKey, buttonValue) in wizardStep.wizardState.current.buttons track by buttonKey">
-              <div class="panel panel-default">
-                <div class="panel-heading">
-                  <h4 class="panel-title">{{buttonValue.name}}</h4>
-                </div>
-                <div class="panel-body">
-                  <label class="form-group">
-                    Name
-                    <input class="form-control" type="text" ng-model="buttonValue.name">
-                  </label>
-                  <label class="checkbox-inline"><input type="checkbox" ng-model="buttonValue.disabled"> Disabled</label>
-                  <label class="checkbox-inline"><input type="checkbox" ng-model="buttonValue.visible"> Visible</label>
-                </div>
-              </div>
-            </div>
-            
-            <div class="col-md-12">
-              <hr>
-              <h3>Wizard Steps</h3>
-            </div>
-            <div class="col-md-6" ng-repeat="step in wizardStep.wizardState.current.steps track by step.id">
-              <div class="panel panel-default" >
-                <div class="panel-heading">
-                  <h4 class="panel-title"><span ng-if="step.parent">Substep: </span>{{step.name}}</h4>
-                </div>
-                <div class="panel-body">
-                  <label class="form-group">
-                    Name
-                    <input class="form-control" type="text" ng-model="step.name">
-                  </label>
-                  <label class="checkbox-inline"><input  type="checkbox" ng-model="step.disabled"> Disabled</label>
-                  <label class="checkbox-inline"><input  type="checkbox" ng-model="step.complete"> Complete</label>
-                  <label ng-if="step.hasChildren" class="checkbox-inline"><input type="checkbox" ng-model="step.isOpen"> isOpen (show minor steps in dropdown)</label>
-                </div>
-              </div>
-
-            </div>
-          </div>
-          
-          
-          
-          
-        </form>
-      </script>
-      <script type="text/ng-template" id="step2.html">
-        <h2>Wizard Step 2</h2>
-      </script>
-      <script type="text/ng-template" id="step3-a.html">
-        <h2>Wizard Step 3a</h2>
-      </script>
-      <script type="text/ng-template" id="step3-b.html">
-        <h2>Wizard Step 3b</h2>
-      </script>
-      <script type="text/ng-template" id="step4.html">
-        <h2>Wizard Step 4</h2>
-      </script>
-      <script type="text/ng-template" id="step5.html">
-        <h2>Wizard Step 5</h2>
-      </script>
-      <script type="text/ng-template" id="step6.html">
-        <h2>Wizard Step 6</h2>
-      </script>
-      <script type="text/ng-template" id="step7.html">
-        <h2>Wizard Step 7</h2>
-      </script>
-
     </main>
     
   </body>
