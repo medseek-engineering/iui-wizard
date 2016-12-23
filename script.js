@@ -6,6 +6,8 @@
     {
       name: 'Welcome',
       id: 'terms',
+      disabled: false,
+      complete: false,
       buttons: {
         cancel: {
           visible: false,
@@ -18,12 +20,18 @@
           name: 'Cancel'
         },
       },
+      controller: ['$scope', function($scope) {
+        $scope.$watch(()=>$scope.wizardData.overEighteen, onWatchOverEighteen);
+        function onWatchOverEighteen(newVal) {
+          $scope.wizardSteps[0].buttons.next.disabled = !newVal;
+        }
+      }],
       template: `
         <form class="form-wrapper with-2-columns">
           <p class="lead">A wizard will guide you through the sign up process step by step. It will take a few minutes to complete. We strive to make the process as easy as possible, but connecting to you (or another person's) patient record takes some time. We pride ourselves on security verification and getting your information correct. Don't worry! Our sign up process will guide you through each step.</p>
           <div class="checkbox">
             <label>
-              <input ng-change="wizard.state.buttons.next.disabled = !wizardData.overEighteen" ng-model="wizardData.overEighteen" type="checkbox"> I am over the age of 18.
+              <input ng-model="wizardData.overEighteen" type="checkbox"> I am over the age of 18.
             </label>
           </div>
           <h2 class="page-subheader">Terms &amp; Conditions</h2>
@@ -35,6 +43,11 @@
     {
       name: 'User Information',
       id: 'user-information',
+      disabled: true,
+      complete: false,
+      available: function(wizardData) {
+        return wizardData.overEighteen;
+      },
       template: `
         <form class="form-wrapper form-horizontal">
           <p class="lead">Please enter information for this account</p>
@@ -76,6 +89,16 @@
     {
       name: 'Connect Patient',
       id: 'connect-patient',
+      disabled: true,
+      complete: false,
+      available: function(wizardData) {
+        if (!wizardData.email ||
+            !wizardData.password ||
+            !wizardData.username) {
+          return;
+        }
+        return wizardData.email.length && wizardData.password.length && wizardData.username.length;
+      },
       buttons: {
         next: {
           name: 'Complete',
@@ -143,6 +166,10 @@
   function configure($stateProvider, $urlRouterProvider) {
     
     $stateProvider
+      .state('default', {
+        url: '',
+        redirectTo: 'home'
+      })
       .state('home', {
         url: '/',
         template: `<div class="container">
@@ -157,15 +184,21 @@
           pin: null,
           email: null,
           confirmEmail: null,
-          username: null
+          username: null,
+          overEighteen: false,
+          password: null,
+          confirmPassword: null,
+          patientFirstName: null,
+          patientLastName: null,
+          patientDateOfBirth: null
         },
-        controller: ['$state','$stateParams', 'wizardSteps', function($state, $stateParams, wizardSteps) {
+        controller: ['$state','$stateParams', 'wizardSteps', '$scope', function($state, $stateParams, wizardSteps, $scope) {
           
 
           var vm = this;
 
           vm.data = angular.copy($stateParams);
-          vm.steps = wizardSteps.signup;
+          vm.steps = angular.copy(wizardSteps.signup);
 
           vm.callbacks = {
             cancel: function() {
@@ -175,6 +208,20 @@
               return $state.go('home');
             }
           };
+
+          $scope.$watch(()=>vm.data, validateSteps, true);
+
+          function validateSteps(wizardData) {
+            vm.steps = vm.steps.map(function(step) {
+              var newStep = Object.assign({}, step);
+
+              if (newStep.available) {
+                newStep.disabled = !newStep.available(wizardData);
+              }
+
+              return newStep;
+            });
+          }
 
         }],
         controllerAs: 'signupController',
@@ -195,12 +242,14 @@
 
     wizardRouterHelper.configureStates(wizardSteps.signup);
 
-    $rootScope.$on('$stateChangeStart', function(evt, to, params) {
+    $rootScope.$on('$stateChangeStart', onStateChangeStart);
+
+    function onStateChangeStart(evt, to, params) {
       if (to.redirectTo) {
         evt.preventDefault();
         $state.go(to.redirectTo, params, {location: 'replace'})
       }
-    });
+    }
 
   }
 
