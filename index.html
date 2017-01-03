@@ -39,44 +39,69 @@
         border-top-color: #d4d4d4;
       }
 
-      @keyframes rotateFall {
-    0%      { transform: rotateZ(0deg); }
-    20%     { transform: rotateZ(10deg); animation-timing-function: ease-out; }
-    40%     { transform: rotateZ(17deg); }
-    60%     { transform: rotateZ(16deg); }
-    100%    { transform: translateY(100%) rotateZ(17deg); }
-}
+      .scrolling {
+        overflow-y: auto;
+        max-height: 300px;
+        border: 1px solid #d4d4d4;
+        padding: 10px;
+      }
 
-/* slide in from the bottom */
-@keyframes slideOutLeft {
-    to      { transform: translateX(-100%); }
-}
+      .culture-switcher {
+        padding-left: 15px;
+      }
 
-/* rotate out newspaper */
-@keyframes rotateOutNewspaper {
-    to      { transform: translateZ(-3000px) rotateZ(360deg); opacity: 0; }
-}
 
-/* entering animations --------------------------------------- */
-/* scale up */
-@keyframes scaleUp {
-    from    { opacity: 0.3; -webkit-transform: scale(0.8); }
-}
+      .iui-culture-switcher>li:not(:last-child):after {
+        margin-left: 10px;
+        content: " | ";
+        margin-right: 10px;
+      }
 
-/* slide in from the right */
-@keyframes slideInRight {
-    from    { transform:translateX(100%); }
-    to      { transform: translateX(0); }
-}
+      .iui-culture-switcher>li.active {
+        font-weight: 700;
+      }
 
-/* slide in from the bottom */
-@keyframes slideInUp {
-    from    { transform:translateY(100%); }
-    to      { transform: translateY(0); }
-}
-      
-      .ng-enter           { animation: scaleUp 0.5s both ease-in; z-index: 8888; }
-    .ng-leave           { animation: slideOutLeft 0.5s both ease-in; z-index: 9999; }
+      .iui-culture-switcher>li:not(:last-child) {
+        padding-right: 0;
+      }
+
+      .page-footer {
+        background-color: #333;
+        color: #fff;
+        position: relative;
+        width: 100%;
+        height: 40px;
+        z-index: 999;
+      }
+
+      .page-footer a {
+        color: #fff;
+      }
+
+      .page-footer .culture-switcher {
+        float: left;
+        padding-left: .5em;
+        margin-top: .65em;
+        margin-bottom: 0;
+        color: #666;
+      }
+
+      .page-footer .copyright {
+        float: right;
+        font-size: 12px;
+        padding-top: .95em;
+        padding-right: .5em;
+        text-align: right;
+      }
+
+      .wizard-on {
+        padding-bottom: 40px;
+      }
+
+      .wizard-on .page-footer {
+        position: absolute;
+        bottom: 0;
+      }
 
 
     </style>
@@ -87,6 +112,7 @@
 
     <!-- Angular dependent scripts and modules below -->
     <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.10.0/ui-bootstrap-tpls.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-translate/2.13.1/angular-translate.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.18/angular-ui-router.min.js"></script>
 
     <!-- Module script -->
@@ -96,10 +122,6 @@
     <script src="script.js"></script>
   </head>
   <body ng-app="app">
-    <main
-      ng-controller="TestController as test">
-      <div ui-view></div>
-    </main>
-    
+    <main ui-view></main>
   </body>
 </html>

@@ -2,7 +2,7 @@
   <header class="wizard-header" ng-class="{'open': wizard.dropdown.isOpen}">
     <h1 class="wizard-name" ng-bind="name"></h1>
     <h2 class="wizard-current-step wizard-desktop-hide">
-      {{wizard.settings.text.step}} {{wizardState.currentMajorStep.stepNumber }}: {{wizardState.currentMajorStep.name}}
+      <span translate="{{wizard.settings.text.step}}"></span> {{wizardState.currentMajorStep.stepNumber }}: <span translate="{{wizardState.currentMajorStep.name}}"></span>
     </h2>
     <wizard-steps-dropdown
       class="wizard-mobile-hide"
@@ -17,7 +17,7 @@
           class="btn btn-primary"
           button="wizard.settings.buttons.next"
           callback="wizard.nextClick">
-          {{wizard.settings.buttons.next.name}}
+          <span translate="{{wizard.settings.buttons.next.name}}"></span>
         </wizard-button>
       </li>
       <li ng-if="wizard.settings.buttons.previous.visible">
@@ -25,7 +25,7 @@
           class="btn btn-default"
           button="wizard.settings.buttons.previous"
           callback="wizard.previousClick">
-          {{wizard.settings.buttons.previous.name}}
+          <span translate="{{wizard.settings.buttons.previous.name}}"></span>
         </wizard-button>
       </li>
       <li ng-if="wizard.settings.buttons.save.visible">
@@ -33,7 +33,7 @@
           class="btn btn-default"
           button="wizard.settings.buttons.save"
           callback="wizard.saveClick">
-          {{wizard.settings.buttons.save.name}}
+          <span translate="{{wizard.settings.buttons.save.name}}"></span>
         </wizard-button>
       </li>
       <li ng-if="wizard.settings.buttons.cancel.visible">
@@ -41,7 +41,7 @@
           class="btn btn-default"
           button="wizard.settings.buttons.cancel"
           callback="wizard.cancelClick">
-          {{wizard.settings.buttons.cancel.name}}
+          <span translate="{{wizard.settings.buttons.cancel.name}}"></span>
         </wizard-button>
       </li>
     </ul>
@@ -66,7 +66,7 @@
           class="btn-menu-item"
           button="wizard.settings.buttons.save"
           callback="wizard.saveClick">
-          {{wizard.settings.buttons.save.name}}
+          <span translate="{{wizard.settings.buttons.save.name}}"></span>
         </wizard-button>
       </li>
       <li ng-if="wizard.settings.buttons.cancel.visible">
@@ -74,7 +74,7 @@
           class="btn-menu-item"
           button="wizard.settings.buttons.cancel"
           callback="wizard.cancelClick">
-          {{wizard.settings.buttons.cancel.name}}
+          <span translate="{{wizard.settings.buttons.cancel.name}}"></span>
         </wizard-button>
       </li>
     </ul>
@@ -89,13 +89,13 @@
       class="btn btn-default"
       button="wizard.settings.buttons.previous"
       callback="wizard.previousClick">
-      {{wizard.settings.buttons.previous.name}}
+      <span translate="{{wizard.settings.buttons.previous.name}}"></span>
     </wizard-button>
     <wizard-button
       class="btn btn-primary"
       button="wizard.settings.buttons.next"
       callback="wizard.nextClick">
-      {{wizard.settings.buttons.next.name}}
+      <span translate="{{wizard.settings.buttons.next.name}}"></span>
     </wizard-button>
   </footer>
   <div ng-include="'/$iui-wizard/icons/symbol-defs.html'"></div>
