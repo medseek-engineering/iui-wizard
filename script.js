@@ -26,6 +26,133 @@
   angular.module('app')
     .constant('supportedLanguages', supportedLanguages);
 
+
+  const langTranslations = {
+    en: {
+      WELCOME: 'Welcome',
+      USER_INFORMATION: 'User Information',
+      I_ACCEPT: 'I Accept',
+      CANCEL: 'Cancel',
+      NEXT: 'Next',
+      PREVIOUS: 'Previous',
+      SAVE: 'Save',
+      COMPLETE: 'Complete',
+      CONNECT_PATIENT: 'Connect Patient',
+      CREATE_ACCOUNT: 'Create Account',
+      OF: 'of',
+      STEP: 'Step',
+      SIGNUP_FOR_EMPOWER: 'Signup for EMPOWER',
+      Enrollment_EnrollmentWelcomeMessage: `
+        A wizard will guide you through the sign up process step by step.
+        It will take a few minutes to complete. We strive to make the process
+        as easy as possible, but connecting to you (or another person's)
+        patient record takes some time. We pride ourselves on security
+        verification and getting your information correct. Don't worry!
+        Our sign up process will guide you through each step.
+      `,
+      I_AM_OVER_THE_AGE_OF: 'I am over the age of {{age}}.',
+      TERMS_AND_CONDITIONS_MENU: 'Terms &amp; Conditions',
+      Enrollment_TermsAndConditions: `
+        <p><span>The Patient Portal offers the patients of Freeman Health System (“Freeman”) secure electronic access to portions of their hospital medical record.<span>&nbsp;
+        </span>This can be a valuable communications tool, however, certain precautions should be used to minimize disclosure risks.<span>&nbsp;
+        </span>In order to manage these risks, we have imposed some terms and conditions for participation.<span>&nbsp;
+        </span>By selecting “Accept” at the end of this Agreement, you will demonstrate that you have been informed of these risks and agree to these terms.</span></p>
+        <p><span>We understand the importance of privacy with regard to your healthcare so we make every effort to protect the privacy of your medical information.<span>&nbsp;
+        </span>Our use and disclosure of medical information is described in our Notice of Privacy Practices and can be found on our website www.freemanhealth.com.<span>&nbsp;
+        </span>Access to this secure web portal is an optional service and we may suspend or terminate it at any time for any reason.<span>&nbsp;
+        </span>If we do, we will notify you as promptly as possible.<span>&nbsp; </span>You agree not to hold Freeman or any of its staff or physicians liable for network or security breaches beyond our control.<span>&nbsp;
+        </span>By accepting this Agreement, you acknowledge that you understand and agree to comply with the terms and that all of your questions have been answered to your satisfaction.<span>&nbsp;
+        </span>If you do not understand or do not agree to comply, please choose “Decline” at the end of this Agreement.<span>&nbsp;
+        </span>If you have any questions, we will gladly provide more information. </span>
+        </p>
+        <p><span>Freeman provides this site for the exclusive use of its established patients. All users must have an established relationship with a Freeman provider.<span>&nbsp;
+        </span>We strive to keep all of the information in your records correct and complete.<span>&nbsp;
+        </span>If you identify any discrepancy in your record, you agree to notify us immediately.<span>&nbsp;
+        </span>Additionally, by using the Patient Portal, you agree to provide factual and correct information.
+        </span></p>
+        <p><span>The information on the Patient Portal is maintained by Freeman at its current physical facility.<span>&nbsp;
+        </span>For questions about this site, contact Freeman via email at medicalrecordspatientportal@freemanheatlh.com.</span></p>
+        <p><span>The Patient Portal does provide the following services:
+        </span></p>
+        <p><span>* <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Communication of laboratory results to patient including HIV, STD, Genetic testing and other sensitive test results</span></p>
+        <p><span>* <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Review of patient medication lists and visitation dates
+        </span></p>
+        <p><span>* <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Ability to view scheduled appointments
+        </span></p>
+        <p><span>The Patient Portal is not intended to provide internet-based diagnostic medical services. The information posted by Freeman on the Patient Portal should not be considered complete, nor should it be relied on to suggest a
+         course of treatment for a particular individual. You should always seek the advice of your physician with any questions you may have regarding a medical condition and you should never disregard medical advice or delay in seeking it because of something you
+         may have read on the Patient Portal.<span>&nbsp;&nbsp;&nbsp; </span>Additionally, the following limitations apply:
+        </span></p>
+        <p><span>* <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>No internet-based triage or treatment requests can be accepted.<span>&nbsp;
+        </span>Diagnosis may only be made and treatment rendered after the patient schedules and sees the physician.
+        </span></p>
+        <p><span>*<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>No emergent communications or services are offered.<span>&nbsp;
+        </span>Any emergent conditions should be seen by Urgent Care, the Emergency Department or calling 911.
+        </span></p>
+        <p><span>While some facilities charge for this convenience on an annual basis, Freeman is focused on providing the highest level of service and health care so the Patient Portal is provided as a courtesy to Freeman patients.<span>&nbsp;
+        </span>However, if abuse or negligent usage of the Patient Portal becomes a problem, then we reserve the right, at our own discretion, to terminate the Patient Portal offering, suspend user access or modify services offered through the Patient Portal.<span>&nbsp;
+        </span></span></p>
+        <p><span>Please read the Freeman Notice of Privacy Practices for information on how Protected Health Information (PHI) is used at Freeman. It can be found at www.freemanhealth.com.<span>&nbsp;
+        </span></span></p>
+        <p><span>Patient Acknowledgement and Agreement.<span>&nbsp;
+        </span>I acknowledge that I have read and fully understand this Agreement and I consent to the conditions outlined herein.<span>&nbsp;
+        </span>I have been given the risks and benefits of the Patient Portal.<span>&nbsp; </span>
+        I acknowledge that using the Patient Portal is entirely voluntary and should I decide against using the Patient Portal, it will not impact the quality of care I receive from Freeman.<span>&nbsp;
+        </span>In addition, I agree to adhere to the policies set forth herein, as well as any other instructions or guidelines that my physician may impose for online communications.<span>&nbsp;
+        </span>I have been given an opportunity to ask questions related to this Agreement and all of my questions have been fully answered.</span></p>
+      `,
+      COPYRIGHT_TEXT: `
+        Copyright &copy; {{year}} Influence Health. All Rights Reserved.
+      `,
+      Enrollment_UserInformation: 'Please enter information for this account',
+      Enrollment_ConnectToPatient: 'Please enter the information of the patient you are connecting to'
+    },
+    es: {
+      WELCOME: 'Bienvenido',
+      USER_INFORMATION: 'Informacion del Usuario',
+      I_ACCEPT: 'Acepto',
+      CANCEL: 'Cancelar',
+      NEXT: 'Siguiente',
+      PREVIOUS: 'Anterior',
+      SAVE: 'Salvar',
+      COMPLETE: 'Completar',
+      CONNECT_PATIENT: 'Conectar al Paciente',
+      CREATE_ACCOUNT: 'Crear una Cuenta',
+      OF: 'de',
+      STEP: 'Paso',
+      SIGNUP_FOR_EMPOWER: 'Inscríbete en EMPOWER',
+      Enrollment_EnrollmentWelcomeMessage: `
+        Un asistente lo guiará paso a paso a través del proceso de registro. 
+        Sólo le llevará unos minutos completarlo. Nos esforzamos para hacer 
+        el proceso lo más fácil posible, pero la conexión al registro de su 
+        paciente (o de otra persona) lleva algo de tiempo. Estamos orgullosos 
+        de nuestra verificación de seguridad y por brindarle su información 
+        de forma correcta. ¡No se preocupe! Nuestro proceso de registro lo 
+        guiará a través de cada paso.
+      `,
+      I_AM_OVER_THE_AGE_OF: 'Tengo más de {{age}} años.',
+      TERMS_AND_CONDITIONS_MENU: 'Términos y Condiciones',
+      Enrollment_TermsAndConditions: `
+        Freeman Health administra esta página web ("Sitio") para su conveniencia 
+        y así brindarle información sobre los servicios y recursos que Freeman 
+        Health le ofrece, y para ayudarle a ser un socio en su atención médica. 
+        Al acceder y utilizar este sitio, usted acepta todos los términos y 
+        condiciones que aquí se establecen, así como cualquier otro término y 
+        condición adicional que pudiera aplicarse a un área específica de este Sitio
+      `,
+      COPYRIGHT_TEXT: `
+        Derechos de autor &copy; {{year}} Influence Health. Todos los derechos reservados.
+      `,
+      Enrollment_UserInformation: 'Ingrese la información de esta cuenta',
+      Enrollment_ConnectToPatient: 'Ingrese la información del paciente al que se está conectando'
+    }
+  }
+
+
+
+
+  angular.module('app').constant('langTranslations', langTranslations);
+
   angular.module('app')
     .config(config);
 
@@ -300,7 +427,7 @@
       },
       template: `
         <div class="form-wrapper form-horizontal">
-          <p class="lead">Please enter information for this account</p>
+          <p class="lead" translate="Enrollment_UserInformation"></p>
           <div class="form-group">
             <label
               for="signup_email"
@@ -381,9 +508,7 @@
         wizardData: '='
       },
       template: `
-        <p class="lead">
-          Please enter the information of the patient you are connecting to
-        </p>
+        <p class="lead" translate="Enrollment_ConnectToPatient"></p>
         <div class="form-inline" ng-if="!wizardData.hasPin">
           <div class="form-group">
             <label
@@ -445,127 +570,7 @@
     }
   }
 
-  const langTranslations = {
-    en: {
-      WELCOME: 'Welcome',
-      USER_INFORMATION: 'User Information',
-      I_ACCEPT: 'I Accept',
-      CANCEL: 'Cancel',
-      NEXT: 'Next',
-      PREVIOUS: 'Previous',
-      SAVE: 'Save',
-      COMPLETE: 'Complete',
-      CONNECT_PATIENT: 'Connect Patient',
-      CREATE_ACCOUNT: 'Create Account',
-      OF: 'of',
-      STEP: 'Step',
-      SIGNUP_FOR_EMPOWER: 'Signup for EMPOWER',
-      Enrollment_EnrollmentWelcomeMessage: `
-        A wizard will guide you through the sign up process step by step.
-        It will take a few minutes to complete. We strive to make the process
-        as easy as possible, but connecting to you (or another person's)
-        patient record takes some time. We pride ourselves on security
-        verification and getting your information correct. Don't worry!
-        Our sign up process will guide you through each step.
-      `,
-      I_AM_OVER_THE_AGE_OF: 'I am over the age of {{age}}.',
-      TERMS_AND_CONDITIONS_MENU: 'Terms &amp; Conditions',
-      Enrollment_TermsAndConditions: `
-        <p><span>The Patient Portal offers the patients of Freeman Health System (“Freeman”) secure electronic access to portions of their hospital medical record.<span>&nbsp;
-        </span>This can be a valuable communications tool, however, certain precautions should be used to minimize disclosure risks.<span>&nbsp;
-        </span>In order to manage these risks, we have imposed some terms and conditions for participation.<span>&nbsp;
-        </span>By selecting “Accept” at the end of this Agreement, you will demonstrate that you have been informed of these risks and agree to these terms.</span></p>
-        <p><span>We understand the importance of privacy with regard to your healthcare so we make every effort to protect the privacy of your medical information.<span>&nbsp;
-        </span>Our use and disclosure of medical information is described in our Notice of Privacy Practices and can be found on our website www.freemanhealth.com.<span>&nbsp;
-        </span>Access to this secure web portal is an optional service and we may suspend or terminate it at any time for any reason.<span>&nbsp;
-        </span>If we do, we will notify you as promptly as possible.<span>&nbsp; </span>You agree not to hold Freeman or any of its staff or physicians liable for network or security breaches beyond our control.<span>&nbsp;
-        </span>By accepting this Agreement, you acknowledge that you understand and agree to comply with the terms and that all of your questions have been answered to your satisfaction.<span>&nbsp;
-        </span>If you do not understand or do not agree to comply, please choose “Decline” at the end of this Agreement.<span>&nbsp;
-        </span>If you have any questions, we will gladly provide more information. </span>
-        </p>
-        <p><span>Freeman provides this site for the exclusive use of its established patients. All users must have an established relationship with a Freeman provider.<span>&nbsp;
-        </span>We strive to keep all of the information in your records correct and complete.<span>&nbsp;
-        </span>If you identify any discrepancy in your record, you agree to notify us immediately.<span>&nbsp;
-        </span>Additionally, by using the Patient Portal, you agree to provide factual and correct information.
-        </span></p>
-        <p><span>The information on the Patient Portal is maintained by Freeman at its current physical facility.<span>&nbsp;
-        </span>For questions about this site, contact Freeman via email at medicalrecordspatientportal@freemanheatlh.com.</span></p>
-        <p><span>The Patient Portal does provide the following services:
-        </span></p>
-        <p><span>* <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Communication of laboratory results to patient including HIV, STD, Genetic testing and other sensitive test results</span></p>
-        <p><span>* <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Review of patient medication lists and visitation dates
-        </span></p>
-        <p><span>* <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Ability to view scheduled appointments
-        </span></p>
-        <p><span>The Patient Portal is not intended to provide internet-based diagnostic medical services. The information posted by Freeman on the Patient Portal should not be considered complete, nor should it be relied on to suggest a
-         course of treatment for a particular individual. You should always seek the advice of your physician with any questions you may have regarding a medical condition and you should never disregard medical advice or delay in seeking it because of something you
-         may have read on the Patient Portal.<span>&nbsp;&nbsp;&nbsp; </span>Additionally, the following limitations apply:
-        </span></p>
-        <p><span>* <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>No internet-based triage or treatment requests can be accepted.<span>&nbsp;
-        </span>Diagnosis may only be made and treatment rendered after the patient schedules and sees the physician.
-        </span></p>
-        <p><span>*<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>No emergent communications or services are offered.<span>&nbsp;
-        </span>Any emergent conditions should be seen by Urgent Care, the Emergency Department or calling 911.
-        </span></p>
-        <p><span>While some facilities charge for this convenience on an annual basis, Freeman is focused on providing the highest level of service and health care so the Patient Portal is provided as a courtesy to Freeman patients.<span>&nbsp;
-        </span>However, if abuse or negligent usage of the Patient Portal becomes a problem, then we reserve the right, at our own discretion, to terminate the Patient Portal offering, suspend user access or modify services offered through the Patient Portal.<span>&nbsp;
-        </span></span></p>
-        <p><span>Please read the Freeman Notice of Privacy Practices for information on how Protected Health Information (PHI) is used at Freeman. It can be found at www.freemanhealth.com.<span>&nbsp;
-        </span></span></p>
-        <p><span>Patient Acknowledgement and Agreement.<span>&nbsp;
-        </span>I acknowledge that I have read and fully understand this Agreement and I consent to the conditions outlined herein.<span>&nbsp;
-        </span>I have been given the risks and benefits of the Patient Portal.<span>&nbsp; </span>
-        I acknowledge that using the Patient Portal is entirely voluntary and should I decide against using the Patient Portal, it will not impact the quality of care I receive from Freeman.<span>&nbsp;
-        </span>In addition, I agree to adhere to the policies set forth herein, as well as any other instructions or guidelines that my physician may impose for online communications.<span>&nbsp;
-        </span>I have been given an opportunity to ask questions related to this Agreement and all of my questions have been fully answered.</span></p>
-      `,
-      COPYRIGHT_TEXT: `
-        Copyright &copy; {{year}} Influence Health. All Rights Reserved.
-      `
-    },
-    es: {
-      WELCOME: 'Bienvenido',
-      USER_INFORMATION: 'Informacion del Usuario',
-      I_ACCEPT: 'Acepto',
-      CANCEL: 'Cancelar',
-      NEXT: 'Siguiente',
-      PREVIOUS: 'Anterior',
-      SAVE: 'Salvar',
-      COMPLETE: 'Completar',
-      CONNECT_PATIENT: 'Conectar al Paciente',
-      CREATE_ACCOUNT: 'Crear una Cuenta',
-      OF: 'de',
-      STEP: 'Paso',
-      SIGNUP_FOR_EMPOWER: 'Inscríbete en EMPOWER',
-      Enrollment_EnrollmentWelcomeMessage: `
-        Un asistente lo guiará paso a paso a través del proceso de registro. 
-        Sólo le llevará unos minutos completarlo. Nos esforzamos para hacer 
-        el proceso lo más fácil posible, pero la conexión al registro de su 
-        paciente (o de otra persona) lleva algo de tiempo. Estamos orgullosos 
-        de nuestra verificación de seguridad y por brindarle su información 
-        de forma correcta. ¡No se preocupe! Nuestro proceso de registro lo 
-        guiará a través de cada paso.
-      `,
-      I_AM_OVER_THE_AGE_OF: 'Tengo más de {{age}} años.',
-      TERMS_AND_CONDITIONS_MENU: 'Términos y Condiciones',
-      Enrollment_TermsAndConditions: `
-        Freeman Health administra esta página web ("Sitio") para su conveniencia 
-        y así brindarle información sobre los servicios y recursos que Freeman 
-        Health le ofrece, y para ayudarle a ser un socio en su atención médica. 
-        Al acceder y utilizar este sitio, usted acepta todos los términos y 
-        condiciones que aquí se establecen, así como cualquier otro término y 
-        condición adicional que pudiera aplicarse a un área específica de este Sitio
-      `,
-      COPYRIGHT_TEXT: `
-        Derechos de autor &copy; {{year}} Influence Health. Todos los derechos reservados.
-      `
-    }
-  }
-
-
-
-
-  angular.module('app').constant('langTranslations', langTranslations);
+  
 
   angular.module('app').factory('asyncLoader', asyncLoader);
   asyncLoader.$inject = ['$q' ,'$timeout', 'langTranslations', 'preferredLanguage'];
@@ -605,12 +610,12 @@
     };
   }
 
-  CultureSwitcherController.$inject = ['$scope', '$translate', 'supportedLanguages', 'preferredLanguage'];
+  CultureSwitcherController.$inject = ['$scope', '$translate', 'supportedLanguages'];
 
-  function CultureSwitcherController($scope, $translate, supportedLanguages, preferredLanguage) {
+  function CultureSwitcherController($scope, $translate, supportedLanguages) {
     $scope.cultureSwitcher = {
       supportedCultures: supportedLanguages,
-      currentCulture: _.findWhere(supportedLanguages, {key: preferredLanguage}),
+      currentCulture: _.findWhere(supportedLanguages, {key: $translate.use()}),
 
       // Used by the Angular orderBy filter to start with the active culture first
       orderByCurrentCulture: function(culture) {

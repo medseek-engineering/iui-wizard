@@ -111,7 +111,8 @@
     environment = 'development';
     browserSync.init({
         server: {
-          baseDir: './'
+          baseDir: './',
+          port: 3001
         }
     });
     gulp.watch(allLintFiles, ['lint', 'combineFiles']);
