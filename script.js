@@ -105,7 +105,19 @@
         Copyright &copy; {{year}} Influence Health. All Rights Reserved.
       `,
       Enrollment_UserInformation: 'Please enter information for this account',
-      Enrollment_ConnectToPatient: 'Please enter the information of the patient you are connecting to'
+      Enrollment_ConnectToPatient: 'Please enter the information of the patient <br>you are connecting to',
+      CREATE_ACCOUNT: 'Create an Empower Account',
+      YOUR_EMAIL_ADDRESS: 'Your email address',
+      CONFIRM_EMAIL_ADDRESS: 'Confirm your email address',
+      CHOOSE_USERNAME: 'Choose your username',
+      CREATE_PASSWORD: 'Create a password',
+      CONFIRM_PASSWORD: 'Confirm your password',
+      PATIENT_FIRST_NAME: 'Patient\'s first name',
+      PATIENT_LAST_NAME: 'Patient\'s last name',
+      PATIENT_BIRTHDATE: 'Patient\'s birthdate',
+      SIGNUP: 'Signup',
+      WHAT_IS_THE_PIN: 'What is the PIN associated with the <br>patient\'s record?',
+      NEXT_STEP: 'Next Step'
     },
     es: {
       WELCOME: 'Bienvenido',
@@ -144,7 +156,19 @@
         Derechos de autor &copy; {{year}} Influence Health. Todos los derechos reservados.
       `,
       Enrollment_UserInformation: 'Ingrese la información de esta cuenta',
-      Enrollment_ConnectToPatient: 'Ingrese la información del paciente al que se está conectando'
+      Enrollment_ConnectToPatient: 'Ingrese la información del paciente al que se está conectando',
+      CREATE_ACCOUNT: 'Crear una cuenta de Empower',
+      YOUR_EMAIL_ADDRESS: 'Tu correo electrónico',
+      CONFIRM_EMAIL_ADDRESS: 'Confirme su dirección de correo electrónico',
+      CHOOSE_USERNAME: 'Elige tu nombre de usuario',
+      CREATE_PASSWORD: 'Crea una contraseña',
+      CONFIRM_PASSWORD: 'Confirmar la contraseña',
+      PATIENT_FIRST_NAME: 'Nombre del paciente',
+      PATIENT_LAST_NAME: 'Apellido del paciente',
+      PATIENT_BIRTHDATE: 'Fecha de nacimiento del paciente',
+      SIGNUP: 'Regístrate',
+      WHAT_IS_THE_PIN: '¿Cuál es el PIN asociado con el registro del paciente?',
+      NEXT_STEP: 'Próximo paso'
     }
   }
 
@@ -194,8 +218,51 @@
           patientDateOfBirth: null
         },
         template: `<signup-wizard></signup-wizard>`
-      });
-
+      })
+      .state('signup2', {
+        url: '/signup-one-step',
+        params: {
+          alternateFlow: false,
+          hasPin: false,
+          pin: null,
+          email: null,
+          confirmEmail: null,
+          username: null,
+          overEighteen: false,
+          password: null,
+          confirmPassword: null,
+          patientFirstName: null,
+          patientLastName: null,
+          patientDateOfBirth: null
+        },
+        template: `<signup-one-step></signup-one-step>`
+      })
+      .state('signup3', {
+        url: '/signup3',
+        params: {
+          alternateFlow: false,
+          hasPin: false,
+          pin: null,
+          email: null,
+          confirmEmail: null,
+          username: null,
+          overEighteen: false,
+          password: null,
+          confirmPassword: null,
+          patientFirstName: null,
+          patientLastName: null,
+          patientDateOfBirth: null
+        },
+        template: `<signup-steps class="signup-form-only"></signup-steps>`
+      })
+      .state('signup3.enterPin', {
+        url: '/enter-pin',
+        template: '<signup-enter-pin></signup-enter-pin>'
+      })
+      .state('signup3.createAccount', {
+        url: '/create-account',
+        template: '<signup-form></signup-form>'
+      })
     $urlRouterProvider.otherwise('/');
 
     $translateProvider.useLoader('asyncLoader').preferredLanguage(preferredLanguage);
@@ -306,6 +373,12 @@
           <h2 class="page-subheader">Signup in 2 steps</h2>
           <a class="btn btn-default" ui-sref="signup({alternateFlow: true, hasPin: true, pin: 'fooo1', email: 'foo@foo.com', confirmEmail: 'foo@foo.com', username: 'foo@foo.com'})">Signup with Pin</a>
           <a class="btn btn-default" ui-sref="signup({alternateFlow: true})">Signup without Pin</a>
+
+          <h2 class="page-subheader">Signup in 1 step</h2>
+          <a class="btn btn-default" ui-sref="signup3({hasPin: true, pin: 'fooo1', email: 'foo@foo.com', confirmEmail: 'foo@foo.com', username: 'foo@foo.com'})">Signup with Pin</a>
+          <a class="btn btn-default" ui-sref="signup3()">Signup without Pin</a>
+
+
         </div>
       `
     }
@@ -324,12 +397,13 @@
       controller: SignupWizardController,
       controllerAs: 'signupController',
       template: `
+        <header iui-header></header>
         <iui-workflow-wizard
           wizard-data="signupController.data"
-          wizard-name="{{'SIGNUP_FOR_EMPOWER' | translate}}"
+          wizard-name=""
           wizard-workflow="signupController.workflow"
           wizard-callbacks="signupController.callbacks"></iui-workflow-wizard>
-        <footer iui-footer class="page-footer clearfix hidden-xs"></footer>
+        <footer iui-footer class="site-footer clearfix hidden-xs"></footer>
         <div class="culture-switcher visible-xs-block">
           <iui-culture-switcher></iui-culture-switcher>
         </div>
@@ -369,6 +443,177 @@
 
   }
 
+  angular.module('app')
+    .directive('signupOneStep', signupOneStep);
+
+  function signupOneStep() {
+    return {
+      restrict: 'E',
+      scope: {},
+      template: `
+        <div class="page-wrapper clearfix">
+          <div class="page-photo hidden-xs">
+          </div>
+          <div class="page-container">
+            <signup-form></signup-form>
+          </div>
+        </div>
+        
+      `
+    }
+  }
+
+  angular.module('app')
+    .directive('signupSteps', signupSteps);
+
+  function signupSteps() {
+    return {
+      restrict: 'E',
+      scope: {},
+      controller: signupStepsController,
+      template: `
+        <header iui-header></header>
+        <div class="container-fluid container-signup">
+          <h1 class="page-header text-center" translate="CREATE_ACCOUNT"></h1>
+          <div ui-view></div>
+        </div>
+        <footer
+          iui-footer
+          class="site-footer clearfix hidden-xs"></footer>
+        <div class="culture-switcher visible-xs-block">
+          <iui-culture-switcher></iui-culture-switcher>
+        </div>
+      `
+    }
+  }
+
+  signupStepsController.$inject = [
+    '$state',
+    '$stateParams'
+  ];
+
+  function signupStepsController(
+    $state,
+    $stateParams
+  ) {
+
+    activate();
+
+    function activate() {
+      if ($stateParams.pin) {
+        return $state.go('signup3.createAccount');
+      }
+      return $state.go('signup3.enterPin');
+    }
+
+
+  }
+
+  angular.module('app')
+    .directive('signupEnterPin', signupEnterPin);
+
+  function signupEnterPin() {
+    return {
+      restrict: 'E',
+      scope: {},
+      controller: SignupEnterPinController,
+      controllerAs: 'signupController',
+      template: `
+        <form name="signupForm" ng-submit="signupController.signup(signupController.data)">
+          <div class="form-group">
+            <signup-pin wizard-data="signupController.data"></signup-pin>
+          </div>
+          <div class="form-group text-center">
+            <button
+              type="submit"
+              class="btn btn-lg btn-primary"
+              ng-disabled="signupForm.$invalid"
+              translate="NEXT_STEP"></button>
+          </div>
+        </form>
+      `
+    }
+  }
+
+  SignupEnterPinController.$inject = [
+    '$state',
+    '$stateParams'
+  ];
+
+  function SignupEnterPinController(
+    $state,
+    $stateParams
+  ) {
+
+  
+    let vm = this;
+
+    vm.data = angular.copy($stateParams);
+
+    vm.signup = (data)=>$state.go('signup3.createAccount', {hasPin: true, pin: 'fooo1', email: 'foo@foo.com', confirmEmail: 'foo@foo.com', username: 'foo@foo.com'});
+
+  }
+
+
+  angular.module('app')
+    .directive('signupForm', signupForm);
+
+  function signupForm() {
+    return {
+      restrict: 'E',
+      scope: {},
+      controller: signupFormController,
+      controllerAs: 'signupController',
+      template: `
+        <form
+          name="signupForm"
+          ng-submit="signupController.signup(signupController.data)">
+          <signup-user-information
+            wizard-data="signupController.data"></signup-user-information>
+          <hr>
+          <signup-connect-patient
+            wizard-data="signupController.data"></signup-connect-patient>
+          <hr>
+          <div class="form-wrapper with-2-columns">
+            <strong translate="TERMS_AND_CONDITIONS_MENU"></strong>
+            <div
+              class="scrolling form-group"
+              translate="Enrollment_TermsAndConditions"></div>
+            <over-the-age-of
+              class="form-group"
+              wizard-data="signupController.data"></over-the-age-of>
+          </div>
+          <div class="form-group text-center">
+            <button
+              ng-disabled="signupForm.$invalid"
+              type="submit"
+              class="btn btn-lg btn-primary"
+              translate="SIGNUP"></button>
+          </div>
+        </form>
+      `
+    }
+  }
+
+  signupFormController.$inject = [
+    '$state',
+    '$stateParams'
+  ];
+
+  function signupFormController(
+    $state,
+    $stateParams
+  ) {
+
+  
+    let vm = this;
+
+    vm.data = angular.copy($stateParams);
+
+    vm.signup = ()=>$state.go('home');
+
+  }
+
 
 
 
@@ -381,39 +626,51 @@
       scope: {
         wizardData: '='
       },
-      controller: SignupTermsController,
-      controllerAs: 'signupTerms',
       template: `
         <div class="form-wrapper with-2-columns">
-          <p class="lead" translate="Enrollment_EnrollmentWelcomeMessage">
-          </p>
-          <div class="checkbox">
-            <label>
-              <input
-                type="checkbox"
-                ng-model="wizardData.overEighteen"
-                ng-required="true">
-              <span translate="I_AM_OVER_THE_AGE_OF" translate-values="{age: signupTerms.moduleSettings.minimumAccountHolderAge}"></span>
-            </label>
-          </div>
+          <p class="lead" translate="Enrollment_EnrollmentWelcomeMessage"></p>
+          <over-the-age-of wizard-data="wizardData"></over-the-age-of>
           <h2 class="page-subheader" translate="TERMS_AND_CONDITIONS_MENU"></h2>
-          <div class="scrolling" translate="Enrollment_TermsAndConditions">
-            
-          </div>
+          <div class="scrolling" translate="Enrollment_TermsAndConditions"></div>
         </div>
       `
     }
   }
 
-  SignupTermsController.$inject = ['signupModuleSettings'];
 
-  function SignupTermsController(signupModuleSettings) {
+  angular.module('app')
+    .directive('overTheAgeOf', overTheAgeOf);
+
+  function overTheAgeOf() {
+    return {
+      restrict: 'E',
+      scope: {
+        wizardData: '='
+      },
+      controller: OverTheAgeOfController,
+      controllerAs: 'overTheAgeOf',
+      template: `
+        <div class="checkbox">
+          <label>
+            <input
+              type="checkbox"
+              ng-model="wizardData.overEighteen"
+              ng-required="true">
+            <span
+              translate="I_AM_OVER_THE_AGE_OF"
+              translate-values="{age: overTheAgeOf.moduleSettings.minimumAccountHolderAge}"></span>
+          </label>
+        </div>
+      `
+    }
+  }
+
+  OverTheAgeOfController.$inject = ['signupModuleSettings'];
+
+  function OverTheAgeOfController(signupModuleSettings) {
     let vm = this;
     vm.moduleSettings = signupModuleSettings;
   }
-
-
-
 
 
   angular.module('app')
@@ -427,28 +684,32 @@
       },
       template: `
         <div class="form-wrapper form-horizontal">
-          <p class="lead" translate="Enrollment_UserInformation"></p>
+          <p class="lead text-center" translate="Enrollment_UserInformation"></p>
           <div class="form-group">
             <label
               for="signup_email"
-              class="control-label col-md-6 required-field text-left">Your email address</label>
+              class="control-label col-md-6 required-field text-left"
+              translate="YOUR_EMAIL_ADDRESS"></label>
             <div class="col-md-6">
               <input
                 class="form-control"
                 ng-required="true"
                 type="email"
+                placeholder="name@example.com"
                 ng-model="wizardData.email" id="signup_email">
             </div>
           </div>
-          <div class="form-group">
+          <div class="form-group" ng-if="!wizardData.hasPin">
             <label
               for="signup_confirmEmail"
-              class="control-label col-md-6 required-field text-left">Confirm your email address</label>
+              class="control-label col-md-6 required-field text-left"
+              translate="CONFIRM_EMAIL_ADDRESS"></label>
             <div class="col-md-6">
               <input
                 class="form-control"
                 ng-required="true"
                 type="email"
+                placeholder="name@example.com"
                 ng-model="wizardData.confirmEmail" id="signup_confirmEmail">
             </div>
           </div>
@@ -456,38 +717,45 @@
           <div class="form-group">
             <label
               for="signup_username"
-              class="control-label col-md-6 required-field text-left">Choose your username</label>
+              class="control-label col-md-6 required-field text-left"
+              translate="CHOOSE_USERNAME"></label>
             <div class="col-md-6">
               <input
                 class="form-control"
                 ng-required="true"
                 type="text"
-                ng-model="wizardData.username" id="signup_username">
+                placeholder="name@example.com"
+                ng-model="wizardData.username"
+                id="signup_username">
             </div>
           </div>
           <hr>
           <div class="form-group">
             <label
             for="signup_password"
-            class="control-label col-md-6 required-field text-left">Create a password</label>
+            class="control-label col-md-6 required-field text-left"
+            translate="CREATE_PASSWORD"></label>
             <div class="col-md-6">
               <input
                 class="form-control"
                 ng-required="true"
                 type="password"
-                ng-model="wizardData.password" id="signup_password">
+                ng-model="wizardData.password"
+                id="signup_password">
             </div>
           </div>
           <div class="form-group">
             <label
               for="signup_confirmPassword"
-              class="control-label col-md-6 required-field text-left">Confirm your password</label>
+              class="control-label col-md-6 required-field text-left"
+              translate="CONFIRM_PASSWORD"></label>
             <div class="col-md-6">
               <input
                 class="form-control"
                 ng-required="true"
                 type="password"
-                ng-model="wizardData.confirmPassword" id="signup_confirmPassword">
+                ng-model="wizardData.confirmPassword"
+                id="signup_confirmPassword">
             </div>
           </div>
         </div>
@@ -495,6 +763,28 @@
     }
   }
 
+
+  angular.module('app')
+    .directive('signupPin', signupPin);
+
+  function signupPin() {
+    return {
+      restrict: 'E',
+      scope: {
+        wizardData: '='
+      },
+      template: `
+        <p class="lead text-center" translate="WHAT_IS_THE_PIN"></p>
+        <div class="form-group text-center">
+          <input
+            id="signup_patient_pin"
+            class="form-control"
+            ng-model="wizardData.pin"
+            ng-required="true">
+        </div>
+      `
+    }
+  }
 
 
 
@@ -508,26 +798,15 @@
         wizardData: '='
       },
       template: `
-        <p class="lead" translate="Enrollment_ConnectToPatient"></p>
-        <div class="form-inline" ng-if="!wizardData.hasPin">
-          <div class="form-group">
-            <label
-              for="signup_patient_pin"
-              class="control-label">What is the PIN associated with the patient's record?</label><br>
-            <input
-              id="signup_patient_pin"
-              class="form-control"
-              ng-model="wizardData.pin"
-              ng-required="true">
-          </div>
-        </div>
-        
+        <p class="lead text-center" translate="Enrollment_ConnectToPatient"></p>
+        <signup-pin ng-if="!wizardData.hasPin"></signup-pin>
         <div class="form-wrapper form-horizontal">
           <hr ng-if="!wizardData.hasPin">
           <div class="form-group">
             <label
               for="signup_patient_firstName"
-              class="control-label col-md-6 required-field text-left">Patient's first name</label>
+              class="control-label col-md-6 required-field text-left"
+              translate="PATIENT_FIRST_NAME"></label>
             <div class="col-md-6">
               <input
                 id="signup_patient_firstName"
@@ -541,7 +820,8 @@
           <div class="form-group">
             <label
               for="signup_patient_lastName"
-              class="control-label col-md-6 required-field text-left">Patient's last name</label>
+              class="control-label col-md-6 required-field text-left"
+              translate="PATIENT_LAST_NAME"></label>
             <div class="col-md-6">
               <input
                 id="signup_patient_lastName"
@@ -555,7 +835,8 @@
           <div class="form-group">
             <label
               for="signup_patient_dateOfBirth"
-              class="control-label col-md-6 required-field text-left">Patient's birthdate</label>
+              class="control-label col-md-6 required-field text-left"
+              translate="PATIENT_BIRTHDATE"></label>
             <div class="col-md-6">
               <input
                 id="signup_patient_dateOfBirth"
@@ -632,6 +913,23 @@
     };
   }
 
+  angular.module('app')
+    .directive('iuiHeader', iuiHeader);
+
+  function iuiHeader() {
+    return {
+      restrict: 'EA',
+      scope: {},
+      replace: true,
+      template: `
+        <header class="site-header">
+          <div class="container-fluid">
+            <h1 class="logo-container"><a ui-sref="home"><span class="logo">Influence Health Empower</span></a></h1>
+          </div>
+        </header>
+      `
+    }
+  }
 
   angular.module('app')
     .directive('iuiFooter', iuiFooter);
@@ -646,13 +944,17 @@
         scope.currentYear = d.getFullYear();
       },
       template: `
-        <footer id="masterLayout_contentinfo_footer" role="contentinfo">
-          <div class="footer-logo">
-          </div>
+        <footer
+          id="masterLayout_contentinfo_footer"
+          role="contentinfo">
+          <div class="footer-logo"></div>
           <div class="culture-switcher">
             <iui-culture-switcher></iui-culture-switcher>
           </div>
-          <p class="copyright" translate="COPYRIGHT_TEXT" translate-values="{year: currentYear}"></p>
+          <p
+            class="copyright"
+            translate="COPYRIGHT_TEXT"
+            translate-values="{year: currentYear}"></p>
         </footer>
       `
     }

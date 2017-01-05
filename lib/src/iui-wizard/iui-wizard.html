@@ -46,6 +46,7 @@
       </li>
     </ul>
     <div
+      ng-if="wizard.settings.buttons.save.visible || wizard.settings.buttons.cancel.visible"
       class="btn-group btn-group-wizard-options-menu wizard-desktop-hide" 
       is-open="wizard.dropdown.isOpen">
       <button
