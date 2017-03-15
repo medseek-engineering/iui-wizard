@@ -20,8 +20,20 @@ $wizard-number-spacing: $wizard-padding*2 + 10px;
 
 $wizard-steps-dropdown-min-width: 240px;
 
-@import "iui-wizard/*.scss";
-@import "wizard-button/*.scss";
-@import "wizard-steps-dropdown/*.scss";
-@import "wizard-step/*.scss";
+%wizard-button-reset {
+  background: none;
+  text-align: left;
+  border: none;
+  box-shadow: none;
+}
+
+%button-current-step-over {
+  box-shadow: none;
+  color: $sg_primary;
+}
+
+@import "iui-wizard/_wizard-styles.scss";
+@import "wizard-button/_wizard-button.scss";
+@import "wizard-steps-dropdown/_wizard-steps-dropdown.scss";
+@import "wizard-step/_wizard-step.scss";
 

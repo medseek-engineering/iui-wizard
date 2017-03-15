@@ -4,8 +4,8 @@
     class="btn-menu-item wizard-step"
     callback="stepClick"
     button="step">
-    {{step.name}}
-    <svg ng-if="step.complete" class="icon icon-checkmark">
+    <span translate="{{step.name}}"></span>
+    <svg ng-if="step.complete" class="wizard-icon wizard-icon-checkmark">
       <use xlink:href="#icon-checkmark" />
     </svg>
   </wizard-button>
@@ -18,8 +18,8 @@
           class="btn-menu-item wizard-step wizard-sub-step"
           callback="stepClick"
           button="subStep">
-          {{subStep.name}}
-          <svg ng-if="subStep.complete" class="icon icon-checkmark">
+          <span translate="{{subStep.name}}"></span>
+          <svg ng-if="subStep.complete" class="wizard-icon wizard-icon-checkmark">
             <use xlink:href="#icon-checkmark" />
           </svg>
       </li>

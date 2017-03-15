@@ -26,22 +26,8 @@
 }
 
 
-%button-reset {
-  background: none;
-  text-align: left;
-  border: none;
-  box-shadow: none;
-}
-
-%button-current-step-over {
-  box-shadow: none;
-  color: $sg_primary;
-}
-
-
-
-.btn-simple {
-  @extend %button-reset;
+.wizard-btn-simple {
+  @extend %wizard-button-reset;
   padding: 0 $wizard-padding 0 0;
   margin: 0;
   color: $sg_secondary;
@@ -51,7 +37,7 @@
     font-size: $base-mobile-font-size;
   }
   &.btn:hover, &.btn:focus {
-    @extend %button-reset;
+    @extend %wizard-button-reset;
     @extend %button-current-step-over;
   }
   .open &, .btn-group.open & {
@@ -72,7 +58,7 @@
 
 .btn-wizard-options-menu {
   padding: $wizard-options-menu-btn-padding-top-bottom-size $wizard-padding;
-  &.btn-active > .icon {
+  &.btn-active > .wizard-icon {
     transform: rotate(180deg);
   }
 }
@@ -95,6 +81,7 @@
 // wizard name
 
 .wizard-name {
+  @extend .page-header;
   margin-bottom: 0;
   @media (max-width: ($wizard-breakpoint - 1px)) {
     font-size: $small-font-size;
@@ -168,12 +155,6 @@
   }
 }
 
-.wizard {
-  background-color: $sg_secondary_background;
-  min-height: 100vh;
-
-}
-
 .wizard-body {
   padding: $wizard-padding;
   @media (max-width: ($wizard-breakpoint - 1px)) {
@@ -185,14 +166,14 @@
 
 
 
-.icon {
+.wizard-icon {
   width: 1em;
   height: 1em;
   fill: currentColor;
   stroke: currentColor;
 }
 
-.btn > .icon {
+.btn > .wizard-icon {
   vertical-align: middle;
   // magic number to vertically center icon with text
   margin-top: -0.25em;

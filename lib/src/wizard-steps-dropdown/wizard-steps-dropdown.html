@@ -4,8 +4,8 @@
   <button
     dropdown-toggle
     type="button" 
-    class="btn btn-simple btn-wizard-current-step dropdown-toggle">
-    {{settings.text.step}} {{currentMajorStep.stepNumber }}<span class="wizard-mobile-hide"> {{settings.text.of}} {{steps.length}}</span>: {{currentMajorStep.name}}
+    class="btn wizard-btn-simple btn-wizard-current-step">
+    <span translate="{{settings.text.step}}"></span> {{currentMajorStep.stepNumber }}<span class="wizard-mobile-hide"> <span translate="{{settings.text.of}}"></span> {{steps.length}}</span>: <span translate="{{currentMajorStep.name}}"></span>
     <span class="caret"></span>
   </button>
   <ol 
